@@ -1,0 +1,137 @@
+---
+title: "COVID Shutdown Regulations on Restaurants Decreases xx% of Average Total Sales in Ontario"
+author: "Hong Shi, Hong Pan, Yixin Guan"
+thanks: "Code and data are available at: LINK."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+abstract: "Since 2020, the world-wide COVID-19 pandemic has greatly influenced public health and healthcare, resulting in governments to impose regulations on social gatherings to eliminate further outbreaks. In Ontario, the provincewide stay at home order and shutdown restrictions on businesses and facilities has limited economic activities into a recession. This paper examines the shutdown effect on restaurants by reopening a city in Ontario (Peterborough) and comparing its restaurant operating situation with that of another city (Brantford) after three months reopening. The experiment results show that shutdown regulations on restaurants have decresed xxx%....."
+output:
+  bookdown::pdf_document2:
+toc: FALSE
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(palmerpenguins)
+```
+
+# Introduction
+
+1. show current covid situations and policy regulations from world wide perspective to Ontario specific.
+
+2. some context of economics effects on Ontario, preferably specific to covid effect on restaurant
+
+3. however, current data include not only the shutdown effect, but also the covid effect (counterfeit counterfactual), Inferring causality will require that you rule out other potential factors that could have affected the outcome under consideration.(close of restaurants etc.) Does not make sense to compare the restaurant situations before COVID and during COVID. 
+
+4. As a result, to give an accurate estimate of the counterfactual, we need to identify the treatment & control group (2 cities) under current COVID outbreak, with similar restaurant operating situations. We selected Peterborough and Brantford.(could leave this part to discussion)
+SAME IN 3 WAYS: (1).avg characteristics identical (through )
+ (2). treatment should not affect the comparison group either directly or indirectly ( by city distance of 200+ km unlikely to travel to another city for a meal) However, there might be overestimate of the reopening effect on restaurants since people living near Peterborough while still having their regions' restaurants shutdown might choose to go to Peterborough, increasing sales of Peterborough restaurants.
+ (3). Outcome of units in control group should change the same way as outcomes in treatment group (e.g. Provincial subsidy applied to the whole Ontario restaurant business)
+ 
+Sampling methods and randomizations: Yixin
+
+Data & Survey:
+Discussioin Part:
+1.Summarize, then
+2. mention the selection of cities (limitations)
+3. sampling methods (limitations)
+4. Need to address internal validity and external validity
+Internal validity:Internal validity means that the estimated impact of the program is
+net of all other potential confounding factors—or, in other words, that
+the comparison group provides an accurate estimate of the counterfactual,
+so that we are estimating the true impact of the program.
+Basically true since the selection of these two cities ensures the similarity in turn of either city size , population, etc. and restaurant operating situation (through ).  
+
+External validity:
+External validity means that the evaluation sample accurately represents
+the population of eligible units.
+
+Somehow limited, results may not be extrapolated to the entire population of interest, i.e. Restaurant all over Ontario. This is a single-tier relative small size city level experiment. May not generalized to townships, or cosmopolitan city like Toronto...
+
+5. Tradeoff between reopening (economy) and covid cases (public health and healthcare). Should carefully consider....
+
+# Data
+```{r}
+citation("cansim")
+```
+
+&nbsp; &nbsp; Our data explores shutdown effects on restaurant businesses in Ontario. We analyzed it using R [@citeR], and packages `tidyverse` [@cite_tidyverse], `scales` [@cite_scales], `here` [@cite_here]. We used R packages `cansim` [@cite_cansim] and packagesxxx to decide our intervention and sampling method, and packages `bookdown` [@cite_bookdown], `kableExtra`[@cite_kableextra] to format the document.
+## Intervention
+
+&nbsp; &nbsp; Partnered with the Ontario government, we want to examine the shutdown effects on restaurant businesses in Ontario. The plan of the experimental design was to reopen all restaurants (i.e. enable the dine-in option) in particular Ontario regions, while enforcing current provincewide shutdown restrictions (i.e. disable the dine-in option) on restaurants in the rest of Ontario regions. And after the three-month reopening, we compare restaurant operating situations in reopened regions with those in shutdown regions through data collected from online surveys of restaurant owners.  
+
+&nbsp; &nbsp; However, due to current COVID pandemic, any loosening of shutdown restrictions increases chances of COVID exposures, resulting in challenges on public health and healthcare of reopened regions. It is highly risky and hasty to reopen a large area of Ontario regions for the sole purpose of our experiment. Therefore, we mindfully chose Peterborough, a relative small size Single-tier^[Ontario's Municipal Act, 2001 defines a single-tier municipality as "a municipality, other than an upper-tier municipality, that does not form part of an upper-tier municipality for municipal purposes"] city 125 kilometers northeast of Toronto, as the only region to reopen in Ontario and then compared its restaurant operating situations with those in Brantford, another Single-tier city 105 kilometers southwest of Toronto with similar population. Since demographics, land areas and more importantly, restaurant operating situations between these two cities are quite similar with each other^[Approach to examine the similarities of these two cities are further introduced in the discussion section], we consider these two cities as valid comparison cities that could yield an accurate estimate of restaurant businesses shutdowns. In our experiment, we assigned restaurants in Peterborough as the treatment group and those in Brantford as the control group. We also ensured restaurants within these two cities to have equal opportunities receiving government support (e.g. subsidies, grants, etc.) to estimate the true impact of shutdown effects on restaurant businesses after three-month reopening in Peterborough. 
+
+
+
+Our data is of penguins (Figure \@ref(fig:bills)).
+
+```{r bills, fig.cap="Bills of penguins", echo = FALSE}
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(alpha = 0.8) +
+  scale_fill_manual(values = c("darkorange","purple","cyan4"),
+                    guide = FALSE) +
+  theme_minimal() +
+  facet_wrap(~species, ncol = 1) +
+  coord_flip()
+```
+
+Talk more about it.
+
+Also bills and their average (Figure \@ref(fig:billssssss)). (Notice how you can change the height and width so they don't take the whole page?)
+
+```{r billssssss, fig.cap="More bills of penguins", echo = FALSE, fig.width=8, fig.height=4}
+
+# This needs to be about the random data tha tI sasmpled?
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(alpha = 0.8) +
+  scale_fill_manual(values = c("darkorange","purple","cyan4"),
+                    guide = FALSE) +
+  theme_minimal() +
+  facet_wrap(~species, ncol = 1) +
+  coord_flip()
+```
+
+Talk way more about it. 
+
+
+
+# Model
+
+\begin{equation}
+Pr(\theta | y) = \frac{Pr(y | \theta) Pr(\theta)}{Pr(y)}  (\#eq:bayes)
+\end{equation}
+
+Equation \@ref(eq:bayes) seems useful, eh?
+
+Here's a dumb example of how to use some references: In paper we run our analysis in `R` [@citeR]. We also use the `tidyverse` which was written by @thereferencecanbewhatever If we were interested in baseball data then @citeLahman could be useful. 
+
+
+# Results
+
+# Discussion
+
+## First discussion point
+
+If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
+
+## Second discussion point
+
+## Third discussion point
+
+## Weaknesses and next steps
+
+Weaknesses and next steps should also be included.
+
+\newpage
+
+# Appendix {-}
+
+\newpage
+
+
+# References
+
+
