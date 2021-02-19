@@ -102,11 +102,23 @@ popdensity_employment <-
   popdensity_employment %>% 
   filter( City !="Toronto")
 
+# Highlight cities chosen for our experiment
+highlight_city <- popdensity_employment %>% 
+  filter(City =="Brantford"|City =="Peterborough")
+
 ggplot( data = popdensity_employment, mapping = aes(x = Employment, y = Population_Density)) +
   geom_point( )+
+  geom_point(data = highlight_city,
+             aes(x = Employment, y = Population_Density),
+             color="red",
+             size = 2)+
   theme_minimal() + 
-  geom_label_repel(aes( label = City)) 
-#geom_smooth( method = "lm", formula = y~x)
+  geom_label_repel(aes( label = City)) +
+  labs(
+    title = "Population Density vs Total Employment on Accommodation and Food Services in Ontario Cities",
+    x = "Employment",
+    y = "Population Density"
+  )
 
 # As we could see from the graph, the data points representing Bratford and Peterborough lies closely with each other
 # Meaning that they have similar population density and accommodation and food service employment, 
