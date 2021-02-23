@@ -26,8 +26,7 @@ library(kableExtra)
 
 # Data
 
-
-&nbsp; &nbsp; Our data explores shutdown effects on restaurant businesses in Ontario. We analyzed it using R [@citeR], and packages `tidyverse` [@cite_tidyverse], `here` [@cite_here]. We used R packages `cansim` [@cite_cansim] and packagesxxx to decide our intervention and sampling method, and packages `bookdown` [@cite_bookdown], `kableExtra`[@cite_kableextra] to format the document.
+&nbsp; &nbsp; Our data explores shutdown effects on restaurant businesses in Ontario. We analyzed it using R [@citeR], and packages `tidyverse` [@cite_tidyverse], `stringr`[@cite_stringr],  `here` [@cite_here]. We used R packages `cansim` [@cite_cansim] and packagesxxx to decide our intervention and sampling method, and packages `bookdown` [@cite_bookdown], `kableExtra`[@cite_kableextra] to format the document.
 
 ## Intervention
 
@@ -35,7 +34,48 @@ library(kableExtra)
 
 &nbsp; &nbsp; However, due to current COVID pandemic, any loosening of shutdown restrictions increases chances of COVID exposures, resulting in challenges on public health and healthcare of reopened regions. It is highly risky and hasty to reopen a large area of Ontario regions for the sole purpose of our experiment. Therefore, we mindfully chose Peterborough, a relative small size Single-tier^[Ontario's Municipal Act, 2001 defines a single-tier municipality as "a municipality, other than an upper-tier municipality, that does not form part of an upper-tier municipality for municipal purposes"] city 125 kilometers northeast of Toronto, as the only region to reopen in Ontario and then compared its restaurant operating situations with those in Brantford, another Single-tier city 105 kilometers southwest of Toronto with similar population. Since demographics, land areas and more importantly, restaurant operating situations between these two cities are quite similar with each other^[Approach to examine the similarities of these two cities are further introduced in the discussion section], we consider these two cities as valid comparison cities that could yield an accurate estimate of restaurant businesses shutdowns[@cite_impact]. In our experiment, we assigned restaurants in Peterborough as the treatment group and those in Brantford as the control group. We also ensured restaurants within these two cities to have equal opportunities receiving government support (e.g. subsidies, grants, etc.) to estimate the true impact of shutdown effects on restaurant businesses after three-month reopening in Peterborough. 
 
+## Sampling Methods
 
+This experiment considered all Ontario restaurants as its target population. The frame population was decided by randomly selecting 100 restaurants from Brantford and 100 from Peterborough. To ensure the external validity of the experiment, we used the following steps to find these restaurants: 
+
+1. Scrape the postal codes of all restaurants located within the circle of the Brantford City Centre to a 40 km radius on Yelp. And then use the same method for Peterborough.
+
+2. Acquire a list of postal codes in Brantford CMA and Peterborough CMA from the Postal Code Conversion File (PCCF) retrieved from the University of Toronto Library[@cite_uoftlibrary]. 
+
+3. Compare the two lists and eliminate the restaurants with postal codes outside of Peterborough CMA and the Brantford CMA.
+
+4. Randomly select 100 restaurants from Brantford and 100 restaurants from Peterborough to form the frame population. 
+
+
+
+```{r samplingtable, fig.cap='Sampling Results Summary', echo=FALSE }
+tibble(
+  'City' = list('Brantford', 'Peterborough'), 
+  'Survey Administered' = list(100, 100),
+  'Total Sample Collected' = list(45, 48),
+  'Telephone Survey' = list(40, 41),
+  'Online Survey' = list(5, 7)
+) %>%
+  kbl(caption = 'Sampling Results Summary',
+      align = "cccc") %>%
+  kable_styling(latex_options = "hold_position")
+```
+
+We used telephone interviews and online questionnaire methods to administer the survey. The telephone interview served as the primary channel and an online survey option was provided when respondents could not or prefer not to be interviewed over the phone. As shown in the above table (Table \@ref(tab:samplingtable)), our sampled population included 45 valid responses in Brantford and 48 collected from Peterborough, among which, 5 were collected via the online survey in Brantford and 7 were collected via the online survey in Peterborough. Surveys that were not answered or have incomplete answers were treated as nonresponses and were not included in the dataset for further analysis. The surveys were administered in the following steps: 
+
+1. The phone number of the restaurants was scraped from Yelp while we determined the frame population. 
+
+2. Working from 2 pm to 4 pm, half of the survey staff called the Brantford restaurants, and the other half called the Peterborough restaurants simultaneously to avoid sampling bias. Each phone call took around 15 minutes to complete. All restaurants on the pre-determined list were reached within one week. 
+
+3. When the call was connected, the survey staff would provide a brief introduction of the survey purpose and indicate that the survey was sponsored by the Ontario government. See Appendix A for details.
+
+4. To ensure the quality and accuracy of the data collection, the survey staff would ask if the respondent at the restaurant worked at a management-level position in the restaurant or was familiar with the restaurant’s sales performance. If the respondent answered no, the survey staff would ask the caller to pass the call to the relevant staff in the restaurant. If that staff was not available, the survey staff will schedule another call or provide the online questionnaire based on the preference identified by the respondent. Respondents who were interested in answering the questions via online questionnaires could leave their email addresses and have two weeks to complete the survey questions.
+
+5. Respondents who were not reached by phone for the first time were called again in the following week. Restaurants that did not respond to the second call were documented as “nonresponse”. 
+
+6. To address privacy concerns and to increase the response rate, the respondents were notified before the survey that all answers were recorded anonymously. The respondents were told at the beginning of the telephone survey that they could terminate the survey anytime if they want to. The respondents were also notified before the survey that they would have a chance to win a 50-dollar gift card if they fully participated. 
+
+The survey incurred a total cost of \$20,000 CAD, which was mainly used to hire and train staff to conduct the telephone survey, collect data and administer the online survey if applicable. A small portion of the cost (\$500 CAD) was used for online survey technology support and database maintenance. 
 
 
 
@@ -128,7 +168,21 @@ Extra concerns when determining the treatment group and control group:
 
 If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
 
-## Second discussion point
+## Sampling Method
+
+The sampling methods of this experiment were accompanied by some inevitable limitations and biases: 
+
+* The list of restaurants in Brantford and Peterborough may not be accurately represented on Yelp. Some restaurants may not be registered on Yelp and some may not have updated their information on time. What is more, restaurants would only appear in the Yelp query when it has been reviewed by one of its users, which suggests that certain new restaurants may not be on the list. These limitations may result in the exclusion bias of our sample. 
+
+* The sample suffered from survivorship bias as we only surveyed restaurants that are still in operations. Restaurants that lost their businesses during the pandemic could not be captured with the current method. However, these may be the ones that are most severely impacted. 
+
+* The sampling methods bore self-selection bias. From a psychological standpoint, respondents may have a stronger desire to respond to the survey if they have a strong opinion to express about their situations. The results showed that restaurant owners in Brantford faced a steeper sales decrease, and we expect that this may contribute to the higher survey response rate in Brantford. 
+
+* The accuracy of the responses may be hindered by the difficulties in reaching the management staff of restaurants. The phone numbers scraped from Yelp was usually used for food ordering and the staff who picked up the phone may not know the sales status. However, we do not believe this would significantly skew the result. According to Statistics Canada, 98.5% of restaurants in Canada have 0-99 employees[@cite_industries]. Since food service businesses are usually small to medium size, there is a high likelihood for the survey to reach management staff in the restaurant. Respondents were also asked to pass the phone to management staff or leave their email to receive the online survey if they would like to do so, therefore mitigating the negative impact caused by the telephone survey method. 
+
+* Respondents may react differently in a phone interview compared to an online survey. The two methods may have the potential to produce significantly different results even when the two surveys have the same questions [@cite_surveycompare]. People may be more comfortable answering a certain type of question online rather than by phone call, or vice versa.  
+
+
 
 ## Third discussion point
 
