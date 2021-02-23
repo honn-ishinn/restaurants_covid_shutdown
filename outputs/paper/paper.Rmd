@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(bookdown)
-library(palmerpenguins)
+library(janitor)
 library(stringr)
 library(ggrepel)
 library(here)
@@ -24,15 +24,24 @@ library(kableExtra)
 
 # Introduction
 
+&nbsp; &nbsp; The hospitality industry which encompasses lodging, travel and tourism services, recreation, entertainment, and gastronomy has always been a significant source of employment and a reliable source of income for families for years. Businesses in this industry have been vigorously setting long-term goals and priorities to enhance their position in the market, customer satisfaction, and ultimately maximize profit. To this end, they create, shape, and influence their business capabilities such as human resources, business processes, and technological assets, deploy and implement thoughtful business solutions, and, eventually, make requisite investments with their available or credit resources. Although, by strategic planning there always comes a considerable contemplation of different types of risks and their sources, the unforeseen pandemic commencing in March 2020 was not identified as a considerable threat by most businesses. Nevertheless, even the most risk averse companies would not have the capacity to accommodate a prolonged shut down or to enforce social distancing in a sector such as hospitality where socialization is integral to the customer experience with no well defined end or clarity for the future in sight. 
+
+&nbsp; &nbsp; The COVID-19 pandemic impacted many businesses - including restaurants - and resulted in mass-layoffs of workers throughout the world. According to HuffPost [@cite_unemployment], “Canada's unemployment rate was 13.5% in May 2020, the highest it has been since 1976” [@cite_wikiemploy]. However, the unemployment crisis in Canada, which would result in rising rates of depression, suicide, frustration, crime, and other unprecedented social issues, was proactively considered and managed by the Government of Canada. The Canada Emergency Wage Subsidy (CEWS)V[@cite_CEWS] as well as the Canada Emergency Rent Subsidy (CERS) [@cite_CERS] programs were enacted swiftly and served as much needed lifelines for businesses to survive. The Ontario government also initiated some rules to close businesses in some regions and enforce other rules in the others. In addition, it provided a range of support for businesses to help them survive in this crisis. For example, it offered creative vehicles of financial support such as provincial tax rebates, loans and debt relief interventions, utility bill payment reductions, business grants, and low-interest loans [@cite_reopening].
+
+&nbsp; &nbsp; To help recover from the current recession, we at Petit Poll have partnered with the Ontario government to examine the effects and scope of COVID shutdown on restaurants. We conducted an experiment by selecting two statistically similar cities in Ontario and investigated how reopening the dine-in services for restaurants in one city has prevailed over the state of continued shutdown in another city. We compared unemployment rates, restaurant profitability, and the expected financial and social impact in both circumstances. The results showed that general satisfaction, a sense of purpose, hope, and profitability increase among the businesses that were allowed to re-open. The findings can be generalized to other similar businesses and their associated families and business partners in that city as well. In addition, the governmental support programs for small businesses in both cities contributed substantially to the social wellbeing and recovery pathway of all businesses. However, the higher comparative rate of COVID cases in the city under treatment resulted in general anxiety among residents, triggered the social health advocates and activists to criticize the government reopening effort, and undermined the projected benefits. We then came across the trade-off between opening or closing the public parts of restaurants - or other similar businesses, for which we suggested utilizing SSM (Soft System Methodology) to collect, consider and accommodate all residents' perspectives and potential viewpoints in society.
+
+
 # Data
 
-&nbsp; &nbsp; Our data explores shutdown effects on restaurant businesses in Ontario. We analyzed it using R [@citeR], and packages `tidyverse` [@cite_tidyverse], `stringr`[@cite_stringr],  `here` [@cite_here], `ggpubr`[@cite_ggpubr]. We used R packages `cansim` [@cite_cansim], `httr`[@cite_httr], `xml2`[@cite_xml2] to decide our intervention and sampling method, and packages `bookdown` [@cite_bookdown], `kableExtra`[@cite_kableextra], `ggrepel`[@cite_ggrepel] to format the document. We referenced `Impact Evaluation in Practice`[@cite_impact] and `Sampling Theory and Practice`[@cite_sampletheory] to design our experiment.
+&nbsp; &nbsp; Our data explores shutdown effects on restaurant businesses in Ontario. We analyzed it using R [@citeR], and packages `tidyverse` [@cite_tidyverse], `stringr`[@cite_stringr],  `here` [@cite_here], `ggpubr`[@cite_ggpubr], `janitor`[@cite_janitor] . We used R packages `cansim` [@cite_cansim], `httr`[@cite_httr], `xml2`[@cite_xml2] to decide our intervention and sampling method, and packages `bookdown` [@cite_bookdown], `kableExtra`[@cite_kableextra], `ggrepel`[@cite_ggrepel] to format the document. We referenced `Impact Evaluation in Practice`[@cite_impact] and `Sampling Theory and Practice`[@cite_sampletheory] to design our experiment.
 
 ## Intervention
 
 &nbsp; &nbsp; Partnered with the Ontario government, we want to examine the shutdown effects on restaurant businesses in Ontario. The plan of the experimental design was to reopen all restaurants (i.e. enable the dine-in option) in particular Ontario regions, while enforcing current provincewide shutdown restrictions (i.e. disable the dine-in option) on restaurants in the rest of Ontario regions. And after the three-month reopening, we compare restaurant operating situations in reopened regions with those in shutdown regions through data collected from online surveys of restaurant owners.  
 
-&nbsp; &nbsp; However, due to current COVID pandemic, any loosening of shutdown restrictions increases chances of COVID exposures, resulting in challenges on public health and healthcare of reopened regions. It is highly risky and hasty to reopen a large area of Ontario regions for the sole purpose of our experiment. Therefore, we mindfully chose Peterborough, a relative small size Single-tier^[Ontario's Municipal Act, 2001 defines a single-tier municipality as "a municipality, other than an upper-tier municipality, that does not form part of an upper-tier municipality for municipal purposes"] city 125 kilometers northeast of Toronto, as the only region to reopen in Ontario and then compared its restaurant operating situations with those in Brantford, another Single-tier city 105 kilometers southwest of Toronto with similar population. Since demographics, land areas and more importantly, restaurant operating situations between these two cities are quite similar with each other^[Approach to examine the similarities of these two cities are further introduced in the discussion section], we consider these two cities as valid comparison cities that could yield an accurate estimate of restaurant businesses shutdowns[@cite_impact]. In our experiment, we assigned restaurants in Peterborough as the treatment group and those in Brantford as the control group. We also ensured restaurants within these two cities to have equal opportunities receiving government support (e.g. subsidies, grants, etc.) to estimate the true impact of shutdown effects on restaurant businesses after three-month reopening in Peterborough. 
+&nbsp; &nbsp; However, due to current COVID pandemic, any loosening of shutdown restrictions increases chances of COVID exposures, resulting in challenges on public health and healthcare of reopened regions. It is highly risky and hasty to reopen a large area of Ontario regions for the sole purpose of our experiment. Therefore, we mindfully chose Peterborough, a relative small size Single-tier^[Ontario's Municipal Act, 2001 defines a single-tier municipality as "a municipality, other than an upper-tier municipality, that does not form part of an upper-tier municipality for municipal purposes"] city 125 kilometers northeast of Toronto, as the only region to reopen in Ontario and then compared its restaurant operating situations with those in Brantford, another Single-tier city 105 kilometers southwest of Toronto with similar population. Since demographics, land areas and more importantly, restaurant operating situations between these two cities are quite similar with each other^[Approach to examine the similarities of these two cities are further introduced in the discussion section], we consider these two cities as valid comparison cities that could yield an accurate estimate of restaurant businesses shutdowns. In our experiment, we assigned restaurants in Peterborough as the treatment group and those in Brantford as the control group. We also ensured restaurants within these two cities to have equal opportunities receiving government support (e.g. subsidies, grants, etc.) to estimate the true impact of shutdown effects on restaurant businesses after three-month reopening in Peterborough. 
+
+&nbsp; &nbsp; Starting from October, 2020, the Ontario government reopened Peterborough while keeping shutdown restrictions on the rest of Ontario regions. After a three month period in January 2021, we at Petit Poll started to conduct survey on restaurants in Peterborough and Bratford about their business performance from October to December. Survey results are released in February 2021.
 
 ## Sampling Methods
 
@@ -76,6 +85,84 @@ We used telephone interviews and online questionnaire methods to administer the 
 6. To address privacy concerns and to increase the response rate, the respondents were notified before the survey that all answers were recorded anonymously. The respondents were told at the beginning of the telephone survey that they could terminate the survey anytime if they want to. The respondents were also notified before the survey that they would have a chance to win a 50-dollar gift card if they fully participated. 
 
 The survey incurred a total cost of \$10,000 CAD, which was mainly used to hire and train staff to conduct the telephone survey, collect data and administer the online survey if applicable. A small portion of the cost (\$500 CAD) was used for online survey technology support and database maintenance. 
+
+## Main Survey Results
+```{r, include=FALSE}
+# read in survey data
+simulated_dataset<-read_csv(here('outputs/survey/simulated_restaurant_data.csv'))
+```
+
+```{r question3, fig.align='center', fig.cap="Layoff Situation due to COVID 19", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
+data.frame(table(simulated_dataset$q3_layoff,simulated_dataset$q1_city))%>%
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+  theme_minimal()+
+    geom_bar(stat = "identity",position = position_dodge(), width = 0.7)+
+   theme(plot.title = element_text(hjust = 0.5)) +
+  ylab("Number of Responses")+
+  xlab("Number of Laid-offs")+
+  ggtitle("Layoff Situation due to COVID 19")+
+ 
+  guides(fill=guide_legend(title="City"))
+  
+```
+
+The above figure (Figure \@ref(fig:question3)) shows that restaurants in Peterborough had lower rates of layoff compared to restaurants in Brantford, suggesting families in Peterborough to have experienced better financial situations and probably less stress.
+
+
+```{r q41, fig.align='center', fig.cap="Peterborough: Total Sales Volume October to December vs July to September in 2020", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
+#Peterborough
+p_table <- data.frame(table(simulated_dataset[simulated_dataset$q1_city=="Peterborough",]$q4_total_sales))%>%
+  mutate(pct=round(Freq/sum(Freq)*100,2))
+
+label_p<-paste(p_table$Var1,"\n",p_table$pct)%>%
+  paste("%",sep = "")
+
+pie(p_table$Freq,labels = label_p,col=c("#7FC97F","#BEAED4", "#FDC086", "#FFFF99", "#386CB0" ),
+    main = "Peterborough Total Sales Volume: Reopen (Oct to Dec) vs Shutdown (July to Sept) in 2020",cex=0.6,cex.main=1)
+
+```
+From Figure \@ref(fig:q41), we notice a considerable increase in sales in Peterborough during the reopen period, which was Oct-Dec 2020. This indicated that if restaurants were open, people would had used their services, regardless of potential pandemic risks. This result confirms that the rate of 0-1 layoff in the previous question should be high in this city because restaurants need staff for their dine-in area to operate.
+
+```{r q42, fig.align='center', fig.cap="Brantford: Total Sales Volume October to December vs July to September in 2020", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
+b_table <- data.frame(table(simulated_dataset[simulated_dataset$q1_city=="Brantford",]$q4_total_sales))%>%
+  mutate(pct=round(Freq/sum(Freq)*100,2))
+
+label_b<-paste(b_table$Var1,"\n",b_table$pct)%>%
+  paste("%",sep = "")
+
+pie(b_table$Freq,labels = label_b,col=c("#7FC97F","#BEAED4", "#FDC086", "#FFFF99", "#666666","#386CB0"),
+    main = "Brantford Total Sales Volume: Shutdown (Oct to Dec) vs Shutdown (July to Sept) in 2020",cex=0.5,cex.main=1)
+```
+
+On the other hand, despite the same situation during both periods (Jul-Sep and Oct-Dec), which all restaurants had been closed in Brantford, Figure \@ref(fig:q42) shows a slight decrease in sales volume for those restaurants. One of the reasons could have been the environmental factors. For example, colder weather keeps people at home, and they have more time to cook themselves. Or, limited gathering at parks, because of the cold weather, would result in less demand for ready foods.
+
+The increase of costs in Peterborough, as shown in Figure \@ref(fig:q42), demonstrated more activities in their restaurants. This change admits that the restaurants probably should have preserved more of their staff and consumed more utility or housekeeping materials to maintain their dine-in area. According to figure 4, they must have also purchased more raw materials for their higher revenue. Although cost would usually impact the business unit negatively, from a broader view, these kinds of costs would be considered vital for other businesses to survive as they  insert cash flow  into other businesses and business sectors, helping them to perform and flourish.
+
+```{r q51, fig.align='center', fig.cap="Peterborough: Total Cost Volume October to December vs July to September in 2020", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
+#Peterborough
+p_table_cost <- data.frame(table(simulated_dataset[simulated_dataset$q1_city=="Peterborough",]$q5_total_cost))%>%
+  mutate(pct=round(Freq/sum(Freq)*100,2))
+
+
+label_p<-paste(p_table_cost$Var1,"\n",p_table_cost$pct)%>%
+  paste("%",sep = "")
+
+pie(p_table_cost$Freq,labels = label_p,col=c( "#A6CEE3", "#1F78B4" ,"#B2DF8A" ,"#33A02C","#FB9A99"  ),
+    main = "Peterborough Total Cost Volume: Reopen (Oct to Dec) vs Shutdown (July to Sept) in 2020",cex=0.6,cex.main=1)
+
+```
+```{r q52, fig.align='center', fig.cap="Brantford: Total Cost Volume October to December vs July to September in 2020", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
+#Brantford
+b_table_cost<- data.frame(table(simulated_dataset[simulated_dataset$q1_city=="Brantford",]$q5_total_cost))%>%
+  mutate(pct=round(Freq/sum(Freq)*100,2))
+
+
+label_b<-paste(b_table_cost$Var1,"\n",b_table_cost$pct)%>%
+  paste("%",sep = "")
+
+pie(b_table_cost$Freq,labels = label_b,col=c("#A6CEE3", "#1F78B4" ,"#B2DF8A" ,"#FB9A99"  ),
+    main = "Brantford: Total Cost volume Shutdown (Oct to Dec) vs Shutdown (July to Sept) in 2020",cex=0.6,cex.main=1)
+```
 
 
 

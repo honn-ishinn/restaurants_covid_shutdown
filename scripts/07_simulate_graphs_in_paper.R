@@ -17,8 +17,21 @@ library(tidyverse) # used for data manipulation
 library(ggpubr) ##for combing figures in one graph
 library(ggrepel)
 library(kableExtra)
+library(janitor)
+
+# Import Dataset
 
 
 
-# Referenced the following link to reorder reponses
+
+
+
+
+
+
+
+
+
+
+# Referenced the following link to reorder responses
 #https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2.html

@@ -69,12 +69,8 @@ library(here)
 
 
 #### Control group(Brantford) ####
-
 set.seed(105)
-
-number_of_control<-45     
-
-#Simulate around 50 observations for each city. According to the data scraping from Yelp, Peterborough and Brantford both have around 160 restaurants. From our research, we estimated that around 50 of 100 restaurants randomly selected would reply to our survey.
+number_of_control<-45     #Simulate around 50 observations for each city. According to the data scraping from Yelp, Peterborough and Brantford both have around 160 restaurants. From our research, we estimated that around 50 of 100 restaurants randomly selected would reply to our survey.
 
 control_data<-tibble(
   group=rep("Control", number_of_control),
@@ -90,7 +86,7 @@ control_data<-tibble(
   q7_revenue=sample(c("Decreased more than 25%","Decreased by 5% ~ 25%","Roughly unchanged","Increased by  5% ~ 25%","Increased more than 25%","Prefer not to say"),
                     number_of_control, replace = TRUE, prob = c(0.42, 0.31, 0.11, 0.11, 0.02, 0.03)),
   q8_survive=sample(c("Less than 3 months","3 to 6 months","Longer than 6 months","Unknown","Prefer not to say"),
-                    number_of_control, replace = TRUE, prob = c(0.4, 0.32, 0.18, 0.05, 0.05)),
+                    number_of_control, replace = TRUE, prob = c(0.5, 0.28, 0.08, 0.09, 0.05)),
   q9_profitability=sample(c("Operating at a loss","Breaking even","Profit between 1% and 5%","Profit of 5% or more","Prefer not to say"),
                           number_of_control, replace = TRUE, prob = c(0.52, 0.2, 0.19, 0.03, 0.06)),
   q10_recover=sample(c("Six months or less","7 to 12 months","12 to 18 months","More than 18 months","Prefer not to say"),
@@ -111,9 +107,7 @@ control_data<-tibble(
 
 #### Treatment Group(Peterborough) ####
 
-number_of_treated<-48     
-
-#Simulate around 50 observations for each city. According to the data scraping from Yelp, Peterborough and Brantford both have around 160 restaurants. From our research, we estimated that around 50 of 100 restaurants randomly selected would reply to our survey.
+number_of_treated<-48     #Simulate around 50 observations for each city. According to the data scraping from Yelp, Peterborough and Brantford both have around 160 restaurants. From our research, we estimated that around 50 of 100 restaurants randomly selected would reply to our survey.
 
 treat_data<-tibble(
   group=rep("Treatment", number_of_treated),
@@ -122,14 +116,14 @@ treat_data<-tibble(
   q3_layoff=sample(x=c("0","1-4","5-10","More than 10","Prefer not to say"),number_of_treated,replace = TRUE, prob = c(0.48,0.36,0.1,0.03,0.03)),
   q4_total_sales=sample(c("Increased more than 10%","Increased 5% ~ 10%","Roughly unchanged","Decreased 5% ~ 10%","Decreased more than 10%","Prefer not to say"), number_of_treated, replace = TRUE, 
                         prob = c(0.12,0.44,0.2, 0.08, 0.16,0)),
-  q5_total_cost=sample(c("Decreased more than 25%","Decreased by 5% ~ 25%","Roughly unchanged","Increased by  5% ~ 25%","Increased by more than 25% ","Prefer not to say"),number_of_treated,
+  q5_total_cost=sample(c("Decreased more than 25%","Decreased by 5% – 25%","Roughly unchanged","Increased by  5% – 25%","Increased by more than 25% ","Prefer not to say"),number_of_treated,
                        replace = TRUE, prob = c(0, 0.03, 0.32, 0.43, 0.15, 0.07)),
-  q6_order=sample(c("Decreased more than 25%","Decreased by 5% ~ 25%","Roughly unchanged","Increased by  5% ~ 25%","Increased more than 25%","Prefer not to say"),
+  q6_order=sample(c("Decreased more than 25%","Decreased by 5% – 25%","Roughly unchanged","Increased by  5% – 25%","Increased more than 25%","Prefer not to say"),
                   number_of_treated, replace = TRUE, prob = c(0.08, 0.15, 0.24, 0.39, 0.1, 0.04)),
-  q7_revenue=sample(c("Decreased more than 25%","Decreased by 5% ~ 25%","Roughly unchanged","Increased by  5% ~ 25%","Increased more than 25%","Prefer not to say"),
+  q7_revenue=sample(c("Decreased more than 25%","Decreased by 5% ~ 25%","Roughly unchanged","Increased by  5% – 25%","Increased more than 25%","Prefer not to say"),
                     number_of_treated, replace = TRUE, prob = c(0.25, 0.22, 0.26, 0.1, 0.14, 0.03)),
   q8_survive=sample(c("Less than 3 months","3 to 6 months","Longer than 6 months","Unknown","Prefer not to say"),
-                    number_of_treated, replace = TRUE, prob = c(0.08, 0.27, 0.51, 0.11, 0.03)),
+                    number_of_treated, replace = TRUE, prob = c(0.08, 0.27, 0.57, 0.05, 0.03)),
   q9_profitability=sample(c("Operating at a loss","Breaking even","Profit between 1% and 5%","Profit of 5% or more","Prefer not to say"),
                           number_of_treated, replace = TRUE, prob = c(0.38, 0.25, 0.28, 0.06, 0.03)),
   q10_recover=sample(c("Six months or less","7 to 12 months","12 to 18 months","More than 18 months","Prefer not to say"),
@@ -143,6 +137,7 @@ treat_data<-tibble(
   q15_grants=sample(c("$0 ~ $10,000","$10,000 ~ $20,000","$20,000 ~ $40,000","More than $40,000","Prefer not to say"),
                     number_of_treated,replace = TRUE, prob = c(0.47, 0.36, 0.09, 0.04, 0.04))
 )
+
 
 
 #### Combined control and treatment groups ####
