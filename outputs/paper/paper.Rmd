@@ -161,9 +161,45 @@ label_b<-paste(b_table_cost$Var1,"\n",b_table_cost$pct)%>%
   paste("%",sep = "")
 
 pie(b_table_cost$Freq,labels = label_b,col=c("#A6CEE3", "#1F78B4" ,"#B2DF8A" ,"#FB9A99"  ),
-    main = "Brantford: Total Cost volume Shutdown (Oct to Dec) vs Shutdown (July to Sept) in 2020",cex=0.6,cex.main=1)
+    main = "Brantford: Total Cost Volume Shutdown (Oct to Dec) vs Shutdown (July to Sept) in 2020",cex=0.6,cex.main=1)
+```
+The increase of costs in Peterborough, as shown in Figure \@ref(fig:q51), demonstrated more activities in their restaurants. This change admits that the restaurants probably should have preserved more of their staff and consumed more utility or housekeeping materials to maintain their dine-in area. According to figure 4, they must have also purchased more raw materials for their higher revenue. Although cost would usually impact the business unit negatively, from a broader view, these kinds of costs would be considered vital for other businesses to survive as they generate cash flow into other businesses and business sectors, helping them to perform and flourish.
+
+```{r q8, fig.align='center', fig.cap="Expected Survival Time if Current Situation Continues", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
+# Use
+
+data.frame(table(simulated_dataset$q8_survive,simulated_dataset$q1_city))%>%
+    mutate(Var1 = fct_relevel(Var1 ,"Unknown","Longer than 6 months","3 to 6 months","Less than 3 months")) %>% 
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+  theme_minimal()+
+  geom_bar(stat = "identity",width = 0.8, position = position_dodge()) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ylab("Number of Responses")+
+  xlab("Expected Survival Time")+
+  ggtitle("Expected Survival Time if Current Situation Continues")+
+  guides(fill=guide_legend(title="City"))+
+  coord_flip()
 ```
 
+It is very unfortunate to study Figure \@ref(fig:q8) which shows restaurants in Brantford are not that much positive to continue their business for longer times. This not only shows instability in their personal and family lives, which brings about more stressful situations for them, they would also inject this despondency throughout their community, leading to the emergence of general anxiety in that city. However, “hope” in Peterborough is prevalent among the restaurant owners. This could probably be an indication of happier people in that region who can better handle this unforeseen pandemic.
+
+```{r q10, fig.align='center', fig.cap="Expected Recovery Time Back to pre-COVID Situation", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
+# use
+data.frame(table(simulated_dataset$q10_recover,simulated_dataset$q1_city,simulated_dataset$q2_type))%>%
+  mutate(Var1 = fct_relevel(Var1 ,"Prefer not to say","More than 18 months","12 to 18 months","7 to 12 months","Six months or less")) %>% 
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+  theme_minimal()+
+  geom_bar(stat = "identity",width = 0.8, position = position_dodge())+
+  theme(plot.title = element_text(hjust = 0.5)) +
+  facet_wrap(~Var3)+
+  ylab("Number of responses")+
+  xlab("Number of months")+
+  ggtitle("Expected Recovery Time Back to pre-COVID Situation")+
+  guides(fill=guide_legend(title="City"))+
+  coord_flip()
+
+```
+Although from Figure \@ref(fig:q8), we saw a pervasive gloom among the Brantford restaurants. Figure \@ref(fig:q8) illustrates that even if the pandemic ends immediately, many restaurants in Brantford, especially quick-service restaurants, have indicated that it is difficult to return to the state of operation before the COVID-19 outbreak. While for Peterborough, although some of them suspect the recovery will take more than a year to recoup with the previous situation, most of them indicated this period would be less than a year.
 
 
 
