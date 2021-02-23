@@ -26,7 +26,7 @@ library(kableExtra)
 
 # Data
 
-&nbsp; &nbsp; Our data explores shutdown effects on restaurant businesses in Ontario. We analyzed it using R [@citeR], and packages `tidyverse` [@cite_tidyverse], `stringr`[@cite_stringr],  `here` [@cite_here]. We used R packages `cansim` [@cite_cansim] and packagesxxx to decide our intervention and sampling method, and packages `bookdown` [@cite_bookdown], `kableExtra`[@cite_kableextra] to format the document.
+&nbsp; &nbsp; Our data explores shutdown effects on restaurant businesses in Ontario. We analyzed it using R [@citeR], and packages `tidyverse` [@cite_tidyverse], `stringr`[@cite_stringr],  `here` [@cite_here], `ggpubr`[@cite_ggpubr]. We used R packages `cansim` [@cite_cansim], `httr`[@cite_httr], `xml2`[@cite_xml2] to decide our intervention and sampling method, and packages `bookdown` [@cite_bookdown], `kableExtra`[@cite_kableextra], `ggrepel`[@cite_ggrepel] to format the document. We referenced `Impact Evaluation in Practice`[@cite_impact] and `Sampling Theory and Practice`[@cite_sampletheory] to design our experiment.
 
 ## Intervention
 
@@ -75,7 +75,7 @@ We used telephone interviews and online questionnaire methods to administer the 
 
 6. To address privacy concerns and to increase the response rate, the respondents were notified before the survey that all answers were recorded anonymously. The respondents were told at the beginning of the telephone survey that they could terminate the survey anytime if they want to. The respondents were also notified before the survey that they would have a chance to win a 50-dollar gift card if they fully participated. 
 
-The survey incurred a total cost of \$20,000 CAD, which was mainly used to hire and train staff to conduct the telephone survey, collect data and administer the online survey if applicable. A small portion of the cost (\$500 CAD) was used for online survey technology support and database maintenance. 
+The survey incurred a total cost of \$10,000 CAD, which was mainly used to hire and train staff to conduct the telephone survey, collect data and administer the online survey if applicable. A small portion of the cost (\$500 CAD) was used for online survey technology support and database maintenance. 
 
 
 

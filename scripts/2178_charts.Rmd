@@ -1,0 +1,292 @@
+---
+title: "Untitled"
+output: pdf_document
+---
+```{r}
+citation("ggrepel")
+```
+
+```{r}
+#### Workspace setup ####
+
+library(here)
+here()
+#install.packages("tidyverse")
+library(tidyverse) # used for data manipulation
+
+#install.packages("ggpubr")
+library(ggpubr) ##for combing figures in one graph
+
+#install.packages("ggrepel")
+library(ggrepel)
+library(kableExtra)
+```
+#import dataset
+```{r}
+simulated_dataset<-read_csv(here('outputs/survey/simulated_restaurant_data.csv'))
+```
+
+#Q1
+#```{r}
+table(simulated_dataset$q1_city,simulated_dataset$q2_type)%>%
+  addmargins()%>%
+  kable("html", align = 'clc', caption = 'Restaurant type and quantity information table')%>%
+  kable_styling(full_width = F)
+
+#```
+
+
+
+
+
+#Q3 layoff
+```{r}
+data.frame(table(simulated_dataset$q3_layoff,simulated_dataset$q1_city))%>%
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+  theme_minimal()+
+    geom_bar(stat = "identity",position = position_dodge())+
+   theme(plot.title = element_text(hjust = 0.5)) +
+  ylab("Number of responses")+
+  xlab("Number of laid-offs")+
+  ggtitle("Layoff situation in Peterborough")+
+ 
+  guides(fill=guide_legend(title="City"))
+  
+```
+
+
+
+
+
+#Q4 total sales
+```{r}
+#Peterborough
+p_table <- data.frame(table(simulated_dataset[simulated_dataset$q1_city=="Peterborough",]$q4_total_sales))%>%
+  mutate(pct=round(Freq/sum(Freq)*100,2))
+
+label_p<-paste(p_table$Var1,"\n",p_table$pct)%>%
+  paste("%",sep = "")
+
+pie(p_table$Freq,labels = label_p,col=c("#7FC97F","#BEAED4", "#FDC086", "#FFFF99", "#386CB0" ),
+    main = "Peterborough: Total sales volume during Oct to Dec 2020 compared to July to Sept 2020",cex=0.6,cex.main=1)
+
+
+#Brantford
+b_table <- data.frame(table(simulated_dataset[simulated_dataset$q1_city=="Brantford",]$q4_total_sales))%>%
+  mutate(pct=round(Freq/sum(Freq)*100,2))
+
+label_b<-paste(b_table$Var1,"\n",b_table$pct)%>%
+  paste("%",sep = "")
+
+pie(b_table$Freq,labels = label_b,col=c("#7FC97F","#BEAED4", "#FDC086", "#FFFF99", "#666666","#386CB0"),
+    main = "Brantford:Total sales volume during Oct to Dec 2020 compared to July to Sept 2020",cex=0.5,cex.main=1)
+
+
+
+```
+
+
+
+# q5 total cost
+```{r}
+#Peterborough
+p_table_cost <- data.frame(table(simulated_dataset[simulated_dataset$q1_city=="Peterborough",]$q5_total_cost))%>%
+  mutate(pct=round(Freq/sum(Freq)*100,2))
+
+
+label_p<-paste(p_table_cost$Var1,"\n",p_table_cost$pct)%>%
+  paste("%",sep = "")
+
+pie(p_table_cost$Freq,labels = label_p,col=c( "#A6CEE3", "#1F78B4" ,"#B2DF8A" ,"#33A02C","#FB9A99"  ),
+    main = "Peterborough: Total cost volume during Oct to Dec 2020 compared to July to Sept 2020",cex=0.6,cex.main=1)
+
+
+#Brantford
+b_table_cost<- data.frame(table(simulated_dataset[simulated_dataset$q1_city=="Brantford",]$q5_total_cost))%>%
+  mutate(pct=round(Freq/sum(Freq)*100,2))
+
+
+label_b<-paste(b_table_cost$Var1,"\n",b_table_cost$pct)%>%
+  paste("%",sep = "")
+
+pie(b_table_cost$Freq,labels = label_b,col=c("#A6CEE3", "#1F78B4" ,"#B2DF8A" ,"#FB9A99"  ),
+    main = "Brantford:  Total cost volume during Oct to Dec 2020 compared to July to Sept 2020",cex=0.6,cex.main=1)
+
+```
+
+
+
+
+# Q8 Survive
+
+```{r}
+# Use
+
+data.frame(table(simulated_dataset$q8_survive,simulated_dataset$q1_city))%>%
+    mutate(Var1 = fct_relevel(Var1 ,"Prefer not to say","Unknown","Longer than 6 months","3 to 6 months","Less than 3 months")) %>% 
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+  theme_minimal()+
+  geom_bar(stat = "identity",width = 0.8, position = position_dodge()) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ylab("Number of responses")+
+  xlab("Expected survival time")+
+  ggtitle("How long can survive")+
+  coord_flip()
+```
+
+```{r}
+# No use
+
+data.frame(table(simulated_dataset$q8_survive,simulated_dataset$q1_city))%>%
+  ggplot(aes(Var1, Freq,fill=Var1)) +
+    geom_bar(stat = "identity", width = 0.55)+
+  facet_wrap(~Var2)+
+  scale_x_discrete(limits = c("Less than 3 months", "3 to 6 months", "Longer than 6 months","Unknown","Prefer not to say"))+
+  ylab("Number of responses")+
+  xlab("Expected survival time")+
+  ggtitle("How long can survive")+
+  theme_minimal()+
+  coord_flip()
+  
+  #theme(axis.text.x = element_text(angle = 90))
+```
+
+
+# 10 recover
+```{r}
+# no use
+q_10 <- data.frame(table(simulated_dataset$q10_recover,simulated_dataset$q1_city,simulated_dataset$q2_type))
+data.frame(table(simulated_dataset$q10_recover,simulated_dataset$q1_city,simulated_dataset$q2_type))%>%
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+    geom_bar(stat = "identity",position = position_dodge())+
+  facet_wrap(~Var3)+
+  ylab("Number of responses")+
+  xlab("Number of months")+
+  ggtitle("How long will it take to recover?")+
+  guides(fill=guide_legend(title="City"))+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90))+
+   scale_x_discrete(limits = c("Six months or less","7 to 12 months","12 to 18 months","More than 18 months","Prefer not to say"))
+
+  
+```
+```{r}
+# use
+data.frame(table(simulated_dataset$q10_recover,simulated_dataset$q1_city,simulated_dataset$q2_type))%>%
+  mutate(Var1 = fct_relevel(Var1 ,"Prefer not to say","More than 18 months","12 to 18 months","7 to 12 months","Six months or less")) %>% 
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+  theme_minimal()+
+  geom_bar(stat = "identity",width = 0.8, position = position_dodge())+
+  theme(plot.title = element_text(hjust = 0.5)) +
+  facet_wrap(~Var3)+
+  ylab("Number of responses")+
+  xlab("Number of months")+
+  ggtitle("How long will it take to recover?")+
+  guides(fill=guide_legend(title="City"))+
+  coord_flip()
+
+  
+```
+
+
+
+#q13 wage
+
+```{r}
+# brewer.pal(n = 8, name = "Dark2")
+#Peterborough
+p_table_wage <- data.frame(table(simulated_dataset[simulated_dataset$q1_city=="Peterborough",]$q13_CEWS))%>%
+  mutate(pct=round(Freq/sum(Freq)*100,2))
+
+
+label_p<-paste(p_table_wage$Var1,"\n",p_table_wage$pct)%>%
+  paste("%",sep = "")
+
+pie(p_table_wage$Freq,labels = label_p,col=c( "#A6CEE3", "#1F78B4", "#B2DF8A" ),
+    main = "Peterborough: Is your business receiving the Canada Emergency Wage Subsidy(CEWS)? ",cex=0.6,cex.main=1)
+
+
+#Brantford
+b_table_wage<- data.frame(table(simulated_dataset[simulated_dataset$q1_city=="Brantford",]$q13_CEWS))%>%
+  mutate(pct=round(Freq/sum(Freq)*100,2))
+
+label_b<-paste(b_table_wage$Var1,"\n",b_table_wage$pct)%>%
+  paste("%",sep = "")
+
+pie(b_table_wage$Freq,labels = label_b,col=c("#A6CEE3", "#1F78B4","#FF7F00", "#B2DF8A" ),
+    main = "Brantford: Is your business receiving the Canada Emergency Wage Subsidy(CEWS)? ",cex=0.6,cex.main=1)
+
+
+
+
+
+```
+```{r}
+library(forcats)
+```
+
+
+
+# 14 loans
+```{r}
+# no use
+data.frame(table(simulated_dataset$q14_loans,simulated_dataset$q1_city))%>%
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+    geom_bar(stat = "identity",position = position_dodge())+
+  ylab("Number of responses")+
+  xlab("Grant value")+
+  ggtitle("How much loans have you received for the COVID-19 related reasons?")+
+  guides(fill=guide_legend(title="City"))+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 0))+
+  coord_flip()
+  
+```
+```{r}
+?forcats::fact_reorder
+```
+
+```{r}
+# use
+data.frame(table(simulated_dataset$q14_loans,simulated_dataset$q1_city))%>%
+  mutate(Var1 = fct_relevel(Var1 ,"Prefer not to say","More than $50,000","$40,000 ~ $50,000","$20,000 ~ $40,000","$0 ~ $20,000")) %>% 
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+    geom_bar(stat = "identity",position = position_dodge())+
+  ylab("Number of responses")+
+  xlab("Grant value")+
+  ggtitle("How much loans have you received for the COVID-19 related reasons?")+
+  guides(fill=guide_legend(title="City"))+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 0))+
+  coord_flip()
+  
+
+```
+```{r}
+q_14 <- data.frame(table(simulated_dataset$q14_loans,simulated_dataset$q1_city))
+```
+
+# Q15
+
+```{r}
+t1<-simulated_dataset%>%
+  mutate(Average_value= case_when(
+    q1_city=="Brantford"~ round(mean(simulated_dataset[simulated_dataset$q1_city=="Brantford",]$q11_rate_support),3),
+    q1_city=="Peterborough" ~ round(mean(simulated_dataset[simulated_dataset$q1_city=="Peterborough",]$q11_rate_support),3)
+  ))%>%
+  select(q1_city,q11_rate_support,Average_value,3)
+
+
+
+table(t1$q1_city,t1$q11_rate_support)%>%
+  addmargins()%>%
+  kable("html", align = 'clc', caption = 'Number and level of ratings from two cities')%>%
+  kable_styling(full_width = F)
+
+
+```
+
+
+
+
+

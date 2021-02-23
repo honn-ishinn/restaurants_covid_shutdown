@@ -60,7 +60,7 @@ finalSurveyList <- union(brantfordRandomRestaurant, peterboroughRandomRestaurant
 
 # Save the survey list for survey staffs to contact restaurants 
 
-write.csv(finalSurveyList, here("outputs/surveylist/restaurant_survey_list.csv"))
+write.csv(finalSurveyList, here("outputs/survey/restaurant_survey_list.csv"))
 
 #### Create a simulated table showing restaurant responses####
 
