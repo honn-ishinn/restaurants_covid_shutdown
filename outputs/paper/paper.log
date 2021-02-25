@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (MiKTeX 21.1) (preloaded format=xelatex 2021.2.4)  25 FEB 2021 19:24
+This is XeTeX, Version 3.14159265-2.6-0.999992 (MiKTeX 21.1) (preloaded format=xelatex 2021.2.4)  25 FEB 2021 19:41
 entering extended mode
 **./paper.tex
 (paper.tex
@@ -1062,7 +1062,7 @@ g>
 Here is how much of TeX's memory you used:
  19863 strings out of 412016
  346478 string characters out of 2844937
- 855056 words of memory out of 3000000
+ 854066 words of memory out of 3000000
  39245 multiletter control sequences out of 15000+200000
  410964 words of font info for 89 fonts, out of 3000000 for 9000
  1348 hyphenation exceptions out of 8191
