@@ -6,8 +6,10 @@ date: "`r format(Sys.time(), '%d %B %Y')`"
 abstract: "Due to the world-wide COVID-19 pandemic, shutdown restrictions on businesses and facilities have limited economic activities into a recession. This paper examines the shutdown effect on restaurants by reopening a city in Ontario (Peterborough) and comparing its restaurant operating situation with that of another city (Brantford) after three months reopening. The survey result indicates that shutdown restrictions have negative impacts on restaurant employment, sales and future operation. However, the higher increased COVID cases in the reopened city sugguests the Ontario government to mindfully plan for futher policy decisions."
 output:
   bookdown::pdf_document2:
+    latex_engine: xelatex
 toc: FALSE
 bibliography: references.bib
+
 ---
 
 ```{r setup, include=FALSE}
@@ -43,7 +45,9 @@ library(kableExtra)
 
 ## Sampling Methods
 
-**This experiment considered all Ontario restaurants as its target population. The frame population was decided by randomly selecting 100 restaurants from Brantford and 100 from Peterborough. To ensure the external validity of the experiment, we used the following steps to find these restaurants: **
+A presurvey with five questions was conducted before the decision on intervention was made. The purpose was to make sure our assumptions about the resturant similarities between Petereborough and Brantford are based on concert evidence. We asked selected respondents about the restaurants' location, employment, sales, service types, average price per meal per person to assess whether the resturuants in the two cities are of considerable similarities. 
+
+**We considered all Ontario restaurants as its target population. The frame population was decided by randomly selecting 100 restaurants from Brantford and 100 from Peterborough. To ensure the external validity of the experiment, we used the following steps to find these restaurants: **
 
 1. Scrape the postal codes of all restaurants located within the circle of the Brantford City Centre to a 40 km radius on Yelp. And then use the same method for Peterborough.
 
@@ -54,6 +58,41 @@ library(kableExtra)
 4. Randomly select 100 restaurants from Brantford and 100 restaurants from Peterborough to form the frame population. 
 
 
+
+
+```{r presamplingtable, fig.cap='Sampling Results Summary', echo=FALSE }
+tibble(
+  'City' = list('Brantford', 'Peterborough'), 
+  'Survey Administered' = list(100, 100),
+  'Total Sample Collected' = list(50, 55),
+  'Telephone Survey' = list(43, 47),
+  'Online Survey' = list(7, 8)
+) %>%
+  kbl(caption = 'Sampling Results Summary',
+      align = "cccc") %>%
+  kable_styling(latex_options = "hold_position")
+```
+
+We used telephone interviews and online questionnaire methods to administer the survey. The telephone interview served as the primary channel and an online survey option was provided when respondents could not or prefer not to be interviewed over the phone. As shown in the above table (Table \@ref(tab:presamplingtable)), our sampled population included 50 valid responses in Brantford and 55 collected from Peterborough, among which, 7 were collected via the online survey in Brantford and 8 were collected via the online survey in Peterborough. Surveys that were not answered or have incomplete answers were treated as nonresponses and were not included in the dataset for further analysis. The surveys were administered in the following steps: 
+
+1. The phone number of the restaurants was scraped from Yelp while we determined the frame population. 
+
+2. Working from 2 pm to 4 pm, half of the survey staff called the Brantford restaurants, and the other half called the Peterborough restaurants simultaneously to avoid sampling bias. Each phone call took around 15 minutes to complete. All restaurants on the pre-determined list were reached within one week. 
+
+3. When the call was connected, the survey staff would provide a brief introduction of the survey purpose and indicate that the survey was sponsored by the Ontario government. See Appendix A for details.
+
+4. To ensure the quality and accuracy of the data collection, the survey staff would ask if the respondent at the restaurant worked at a management-level position in the restaurant or was familiar with the restaurant’s sales performance. If the respondent answered no, the survey staff would ask the caller to pass the call to the relevant staff in the restaurant. If that staff was not available, the survey staff will schedule another call or provide the online questionnaire based on the preference identified by the respondent. Respondents who were interested in answering the questions via online questionnaires could leave their email addresses and have two weeks to complete the survey questions.
+
+5. Respondents who were not reached by phone for the first time were called again in the following week. Restaurants that did not respond to the second call were documented as “nonresponse”. 
+
+6. To address privacy concerns and to increase the response rate, the respondents were notified before the survey that all answers were recorded anonymously. The respondents were told at the beginning of the telephone survey that they could terminate the survey anytime if they want to. The respondents were also notified before the survey that they would have a chance to win a 10-dollar gift card if they fully participated.
+
+As shown in the chart below, the results for the presurvey confirmed our initial assumptions that the restururants in Peterborough and Brantford are similar enough for further study. Therefore, we implemented our intervention of reopening the resturuants in Peterborough. 
+
+
+
+
+Three month after the implementation of our intervention, we conducted our formal survey using the same sampling frame and sampling methods. Please see the sampling details and the response rate in the table (Table \@ref(tab:presamplingtable)) below, our sampled population included 45 valid responses in Brantford and 48 collected from Peterborough, among which, 5 were collected via the online survey in Brantford and 7 were collected via the online survey in Peterborough.
 
 ```{r samplingtable, fig.cap='Sampling Results Summary', echo=FALSE }
 tibble(
@@ -67,22 +106,9 @@ tibble(
       align = "cccc") %>%
   kable_styling(latex_options = "hold_position")
 ```
+ 
 
-We used telephone interviews and online questionnaire methods to administer the survey. The telephone interview served as the primary channel and an online survey option was provided when respondents could not or prefer not to be interviewed over the phone. As shown in the above table (Table \@ref(tab:samplingtable)), our sampled population included 45 valid responses in Brantford and 48 collected from Peterborough, among which, 5 were collected via the online survey in Brantford and 7 were collected via the online survey in Peterborough. Surveys that were not answered or have incomplete answers were treated as nonresponses and were not included in the dataset for further analysis. The surveys were administered in the following steps: 
-
-1. The phone number of the restaurants was scraped from Yelp while we determined the frame population. 
-
-2. Working from 2 pm to 4 pm, half of the survey staff called the Brantford restaurants, and the other half called the Peterborough restaurants simultaneously to avoid sampling bias. Each phone call took around 15 minutes to complete. All restaurants on the pre-determined list were reached within one week. 
-
-3. When the call was connected, the survey staff would provide a brief introduction of the survey purpose and indicate that the survey was sponsored by the Ontario government. See Appendix A for details.
-
-4. To ensure the quality and accuracy of the data collection, the survey staff would ask if the respondent at the restaurant worked at a management-level position in the restaurant or was familiar with the restaurant’s sales performance. If the respondent answered no, the survey staff would ask the caller to pass the call to the relevant staff in the restaurant. If that staff was not available, the survey staff will schedule another call or provide the online questionnaire based on the preference identified by the respondent. Respondents who were interested in answering the questions via online questionnaires could leave their email addresses and have two weeks to complete the survey questions.
-
-5. Respondents who were not reached by phone for the first time were called again in the following week. Restaurants that did not respond to the second call were documented as “nonresponse”. 
-
-6. To address privacy concerns and to increase the response rate, the respondents were notified before the survey that all answers were recorded anonymously. The respondents were told at the beginning of the telephone survey that they could terminate the survey anytime if they want to. The respondents were also notified before the survey that they would have a chance to win a 50-dollar gift card if they fully participated. 
-
-The survey incurred a total cost of \$10,000 CAD, which was mainly used to hire and train staff to conduct the telephone survey, collect data and administer the online survey if applicable. A small portion of the cost (\$500 CAD) was used for online survey technology support and database maintenance. 
+The two surveys incurred a total cost of \$10,000 CAD, which was mainly used to hire and train staff to conduct the telephone survey, collect data and administer the online survey if applicable. A small portion of the cost (\$500 CAD) was used for online survey technology support and database maintenance. We also gave out 50 gift cards with a total worth (\$500 CAD) as incentives for higher response rate. 
 
 ## Main Survey Results
 ```{r, include=FALSE}
@@ -278,7 +304,9 @@ The sampling methods of this experiment were accompanied by some inevitable limi
 
 * The list of restaurants in Brantford and Peterborough may not be accurately represented on Yelp. Some restaurants may not be registered on Yelp and some may not have updated their information on time. What is more, restaurants would only appear in the Yelp query when it has been reviewed by one of its users, which suggests that certain new restaurants may not be on the list. These limitations may result in the exclusion bias of our sample. 
 
-* The sample suffered from survivorship bias as we only surveyed restaurants that are still in operations. Restaurants that lost their businesses during the pandemic could not be captured with the current method. However, these may be the ones that are most severely impacted. 
+* Since the results of the presurvey suggest apparent similarities between the restaurants in Peterborough and those in Brantford, we assume the surveyed restaurants to have similar qualities. However, the attributes of the restaurants (size, employments, service type, etc) were not controlled in our analysis. In other words, we believe the response rate within the different restaurant subgroups to be the same. Variations in the actual response between restaurants in two cities are unknown and may impact the internal validity of the results. 
+
+* The sample suffered from survivorship bias as we only surveyed restaurants that are still in operations. Restaurants that lost their businesses during the pandemic could not be captured with the current method. However, these may be the ones that are most severely impacted. Another aspect of the survivorship bias involves the use of the same sampling frame for the presurvey and the formal survey. Since there is a three-month time lag, some resturuants may be closed during that time. 
 
 * The sampling methods bore self-selection bias. From a psychological standpoint, respondents may have a stronger desire to respond to the survey if they have a strong opinion to express about their situations. The results showed that restaurant owners in Brantford faced a steeper sales decrease, and we expect that this may contribute to the higher survey response rate in Brantford. 
 
@@ -289,20 +317,17 @@ The sampling methods of this experiment were accompanied by some inevitable limi
 
 
 ## Survey Results and Policy Implication
+-	Staffing implications 
+•	Policy implications: The Government of Ontario should continue the existing supports provided to restaurants during the lockdown and consider additional support measures to mitigate the risk of increased unemployment. Reopening the restaurants may lead to increased employment in the corresponding area. 
+-	Restaurant sales implementation 
+•	The Government should expect better sales for reopened restaurants. However, it is important to acknowledge that economy would take a long time to reach pre-pandemic performance. Continued support to restaurants may still be needed. 
+-	Future projects of restaurants  
+•	Rebuilding business confidence is a crucial aspect of short-term business recovery and long-term economic stability. The Government should carefully monitor business projection and equip businesses with tailored supports based on their recovery needs. 
+-	Striking a balance between COVID-19 cases
+•	While reopening leads to increased employment, improved restaurant sales, positive business confidence, and ultimately increased government revenue, the impact of the reopening of restaurants needs to be assessed against the situation of the pandemic. By closely monitoring the development of confirmed COVID-19 cases during the intervention period, we found a more rapid spread of COVID-19 cases in Peterborough compared to Brantford. Although more quantitative and qualitative research needs to be conducted to determine if the surge is related to the reopening intervention, the results serve as an alarming-clock for policymakers and the public. 
+•	The government should strike a balance between economic recovery and public health and safety. The health and safety of Ontarians should always be the top priority for the government. The Government should carefully monitor and assess the impact of COVID-19 cases and adjust its reopening policies accordingly. 
+•	In the case of reopening and possible reclosing of restaurants in a region, the government should clearly and effectively communicate the risks and harms of COVID-19 resurgence and its willingness and devotion to addressing business concerns. 
 
-According to survey questions 3-17 in section 2, Peterborough restaurants indicated to be more cheerful to carry on with their businesses in future. They found the COVID-19 situation remediable, demonstrated the desire to further invest in their career, and revealed to be an overall happier society compared to Brantford restaurant. As Dr. Ed Diener, a professor of psychology at the University of Virginia and the University of Utah, and a senior scientist for the Gallup Organization stated in his interview with Sherif Arafa(https://greatergood.berkeley.edu/article/item/why_governments_should_care_more_about_happiness), “The deep and long-lasting sources of happiness contribute to what we call sustainable happiness, which is lasting, not just momentary”. He continues “we find that sustainable happiness leads to:
-·       Better health and longevity: Happy people live longer and experience better health.
-·       Superior work performance, especially organizational citizenship.
-·       More supportive social relationships—for example, being less likely to get divorced.
-·       Better citizenship and more “prosocial” behaviors—for example, being more likely to help others, volunteer, or donate money to charity.
-·       Better mental health and resilience when confronted by stressful events—for example, being less likely to suffer from mental health problems such as depression, and more likely to bounce back after something bad happens.
-The benefits of sustainable happiness are broad and important. They cannot be ignored. To repeat: Happy people do not just feel better, but they function better in achieving the things we value. They help society. They help those around them to also lead high-quality lives. Happy people are not uncaring, selfish people. They have the energy and desire to work on societal problems as much as or more than others”. According to our finding in the above survey results, we believe reopening of the restaurants in Peterborough has resulted in “sustainable happiness” among restaurant owners in this city. Further to that, we didn’t find a substantial reason to not generalize these results to other similar businesses who need to provide physical areas to serve their clients respectively. Adhering to strict preventing regulations, this would include professional services like clinical treatments, open area sports and other applicable safe businesses. We also argue that the  resulted happiness, which was proactively forethought and managed by the Government of Canada by offering supportive programs such as Canada Emergency Wage Subsidy (CEWS), Canada Emergency Loan Subsidy (CELS), business grants and low interest loans, will not only decrease the rates of depression, suicide, frustration, crime, and other unprecedented social issues among this society, it will definitely leave a sense of trust, confidence and faith among the adolescence who usually start their career with a pat-time student work in restaurants. According to (https://www.sciencedaily.com/releases/2011/08/110822091859.htm), “the relative intensity of these emotions (happiness and depression among adolescents) is also important. The odds of drug use were notably lower for youth who reported that they were more often happy than depressed and were substantially higher for those who indicated that they were more depressed than happy”. To this point, we strongly believe that the value of our understudy treatment “the reopening restaurants in Peterborough” has been realized and will continue in future.
- 
-On the other hand, the result of covid cases (((((reference???))))))) revealed a new safety related concern. The higher rate of Corona incidents, fear and mortality among Peterborough people, compared to the residents of Brantford, take us to the emergence of a new argument, “how do you find the overall happiness among people in a city, not solely among the restaurant owners?”. Undoubtedly, more CORONA related cases fold up happiness and spread depression among society, which literally criticises the beneficial effects of above mentioned governmental supportive programs.
-
-Do we believe in absolute “safety first”? If we do, no doubt about keeping restaurants, and probably all other similar business activities, closed until the pandemic ends. And, the government should invest in other programs to insert hope, administer happiness and hinder the spread of depression. However, a controversial discussion would be “should considerate people pay for the negligence of defiant citizens who parade time to time at Yonge and Bloor streets in Toronto (in front of my apartment) to criticize wearing masks?”. Not good enough, some suspect the Corona vaccine contains microchips or 3D-camera to spy and scan their body for intelligent services!
- 
-The goal of this paper is to report the dynamics of an intervention and to analyze how the results of a treatment - reopening the restaurants - would happen if in place. We observe a trade-off between the prosperity and hopefulness among the businesses in one city versus the lower number of COVID cases throughout the other city. We believe this would be a controversial discussion between citizens, activists and the government. At this situation, we recommend the “Soft System Methodology” (SSM) which “uses “systems thinking” in a cycle of action research, learning and reflection to help understand the various perceptions that exist in the minds of the different people involved in (one) situation” (http://www.construction-innovation.info/images/pdfs/Research_library/ResearchLibraryA/Refereed_Conference_papers/Five_Case_Studies.pdf). SSM contributes to better knowledge management, leading to better understanding of different existing viewpoints and also insights to different perspectives of communities. Gathering more information and context knowledge would more or less result in taking the most desired and applicable approach to enforce decisions and to better respond to the citizen’s needs.
 
 
 \newpage
