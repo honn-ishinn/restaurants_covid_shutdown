@@ -103,7 +103,7 @@ data.frame(table(simulated_dataset$q10_recover,simulated_dataset$q1_city,simulat
   guides(fill=guide_legend(title="City"))+
   coord_flip()
 
-# Question 11 11. To what extent do you feel the government financial support programs helped your business survive? (1 being bad, 5 being excellent.)
+# Question 11. To what extent do you feel the government financial support programs helped your business survive? (1 being bad, 5 being excellent.)
 
 simulated_dataset %>%
   tabyl(q1_city, q11_rate_support)%>%

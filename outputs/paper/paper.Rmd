@@ -51,7 +51,7 @@ library(kableExtra)
 
 ## Sampling Method and Survey Methodology
 
-A presurvey with five questions was conducted before the decision on intervention was made. The purpose was to make sure our assumptions about the resturant similarities between Petereborough and Brantford are based on concert evidence. We asked selected respondents about the restaurants' location, employment, sales, service types, average price per meal per person to assess whether the resturuants in the two cities are of considerable similarities. 
+A presurvey with five questions was conducted before the decision on intervention was made. The purpose was to make sure our assumptions about the resturant similarities between Peterborough and Brantford are based on concert evidence. We asked selected respondents about the restaurants' location, employment, sales, service types, average price per meal per person to assess whether the resturuants in the two cities are of considerable similarities. 
 
 **We considered all Ontario restaurants as its target population. The frame population was decided by randomly selecting 100 restaurants from Brantford and 100 from Peterborough. To ensure the external validity of the experiment, we used the following steps to find these restaurants: **
 
@@ -216,9 +216,41 @@ Although from Figure \@ref(fig:q8), we a pervasive gloom among the Brantford res
 
 In addition, survey results about expected recovery time back to pre-COVID situation (Figure \@ref(fig:q10)) illustrate that even if the pandemic ends immediately, most restaurants in Brantford, especially quick-service restaurants, hold negative views to recover back to pre-COVID operating situation in a short period of time. For restaurants in Peterborough, despite some suspicions to recoup with the pre-COVID situation in more than a year, most of them expected to recovery in less than a year. Therefore, we believe that the continuing shutdown in Brantford have harmed expectations of future operation possibilities in Brantford, while the reopening in Peterborough has built confidence to resolve current operation difficulties.
 
+```{r}
+simulated_dataset %>%
+  tabyl(q1_city, q11_rate_support)%>%
+  adorn_totals("row")%>%
+  adorn_totals("col")%>%
+  adorn_percentages("row")%>%
+  adorn_pct_formatting(digits=2)%>%
+  adorn_ns()%>%
+  adorn_title("combined",row_name = "City", col_name = "Rating")%>%
+  kable("html", align = 'ccccccc', caption = 'Number or percentage of each rating level')%>%
+  kable_styling(full_width = F)
+```
+
+ As an agent to gather relevant feedback to the Ontario Government, we asked restaurants how they found the governmental support programs so far. According to Table, both cities stated the effectiveness of the governmental support programs, nevertheless, this figure also implies to their satisfaction and also appreciation for these programs by business entities in both cities.
+```{r}
+# use
+data.frame(table(simulated_dataset$q13_CEWS,simulated_dataset$q1_city))%>%
+#  mutate(Var1 = fct_relevel(Var1 ,"Prefer not to say","More than $50,000","$40,000 ~ $50,000","$20,000 ~ $40,000","$0 ~ $20,000")) %>% 
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+    geom_bar(stat = "identity", width = 0.8, position = position_dodge())+
+  ylab("Number of responses")+
+  xlab("Options")+
+  ggtitle("Restaurants receiving the Canada Emergency Wage Subsidy(CEWS)")+
+  guides(fill=guide_legend(title="City"))+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 0))+
+  coord_flip()
+```
+
+According to figure 14, Peterborough restaurants are using more Canadian Emergency Wage Subsidy (CEWS)- a governmental program available for businesses to reimburse a considerable portion of their employees’ salaries – compared to Brantford restaurants. It is reasonable for Brantford restaurants to have utilized less of this grant because CEWS covers the wages partially and yet, the employer should pay the rest of the employee’s salary. This is also consistent with the results in figure 3 where they indicated to have had more layoffs.
 
 
 # Discussion
+
+
 
 ## Determine the Treatment Group and Control Group
 
@@ -310,9 +342,9 @@ The sampling methods of this experiment were accompanied by some inevitable limi
 
 * The list of restaurants in Brantford and Peterborough may not be accurately represented on Yelp. Some restaurants may not be registered on Yelp and some may not have updated their information on time. What is more, restaurants would only appear in the Yelp query when it has been reviewed by one of its users, which suggests that certain new restaurants may not be on the list. These limitations may result in the exclusion bias of our sample. 
 
-* Since the results of the presurvey suggest apparent similarities between the restaurants in Peterborough and those in Brantford, we assume the surveyed restaurants to have similar qualities. However, the attributes of the restaurants (size, employments, service type, etc) were not controlled in our analysis. In other words, we believe the response rate within the different restaurant subgroups to be the same. Variations in the actual response between restaurants in two cities are unknown and may impact the internal validity of the results. 
+* Since the results of the presurvey suggest apparent similarities between the restaurants in Peterborough and those in Brantford, we assume the surveyed restaurants to have similar **qualities**. However, the attributes of the restaurants (size, employments, service type, etc) were not controlled in our analysis. In other words, we believe the response rate within the different restaurant subgroups to be the same. Variations in the actual response between restaurants in two cities are unknown and may impact the internal validity of the results. 
 
-* The sample suffered from survivorship bias as we only surveyed restaurants that are still in operations. Restaurants that lost their businesses during the pandemic could not be captured with the current method. However, these may be the ones that are most severely impacted. Another aspect of the survivorship bias involves the use of the same sampling frame for the presurvey and the formal survey. Since there is a three-month time lag, some resturuants may be closed during that time. 
+* **The sample suffered from survivorship bias as we only surveyed restaurants that are still in operations. Restaurants that lost their businesses during the pandemic could not be captured with the current method. However, these may be the ones that are most severely impacted. Another aspect of the survivorship bias involves the use of the same sampling frame for the presurvey and the formal survey. Since there is a three-month time lag, some restaurants may be closed during that time.** 
 
 * The sampling methods bore self-selection bias. From a psychological standpoint, respondents may have a stronger desire to respond to the survey if they have a strong opinion to express about their situations. The results showed that restaurant owners in Brantford faced a steeper sales decrease, and we expect that this may contribute to the higher survey response rate in Brantford. 
 
@@ -330,6 +362,11 @@ The sampling methods of this experiment were accompanied by some inevitable limi
 -	Future projects of restaurants  
 *	Rebuilding business confidence is a crucial aspect of short-term business recovery and long-term economic stability. The Government should carefully monitor business projection and equip businesses with tailored supports based on their recovery needs. 
 -	Striking a balance between COVID-19 cases
+
+```{r}
+# readin the covid tracking data
+covid_tracking <- readr::read_csv(here::here("inputs/data/simulated_covid_data.csv"))
+```
 
 ```{r covidcase, fig.align='center', fig.cap="Total Confirmed COVID-19 cases in Peterborough and Brantford", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
   ggplot(data=covid_tracking,aes(x=track_date))+

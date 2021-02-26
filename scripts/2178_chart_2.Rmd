@@ -234,8 +234,25 @@ label_p<-paste(p_table_wage$Var1,"\n",p_table_wage$pct)%>%
 
 pie(p_table_wage$Freq,labels = label_p,col=c( "#A6CEE3", "#1F78B4", "#B2DF8A" ),
     main = "Peterborough: Is your business receiving the Canada Emergency Wage Subsidy(CEWS)? ",cex=0.6,cex.main=1)
+```
+
+```{r}
+# use
+data.frame(table(simulated_dataset$q13_CEWS,simulated_dataset$q1_city))%>%
+#  mutate(Var1 = fct_relevel(Var1 ,"Prefer not to say","More than $50,000","$40,000 ~ $50,000","$20,000 ~ $40,000","$0 ~ $20,000")) %>% 
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+    geom_bar(stat = "identity", width = 0.8, position = position_dodge())+
+  ylab("Number of responses")+
+  xlab("Options")+
+  ggtitle("Restaurants receiving the Canada Emergency Wage Subsidy(CEWS)")+
+  guides(fill=guide_legend(title="City"))+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 0))+
+  coord_flip()
+```
 
 
+```{r}
 #Brantford
 b_table_wage<- data.frame(table(simulated_dataset[simulated_dataset$q1_city=="Brantford",]$q13_CEWS))%>%
   mutate(pct=round(Freq/sum(Freq)*100,2))
@@ -289,7 +306,6 @@ data.frame(table(simulated_dataset$q14_loans,simulated_dataset$q1_city))%>%
   theme_minimal()+
   theme(axis.text.x = element_text(angle = 0))+
   coord_flip()
-  
 
 ```
 ```{r}
