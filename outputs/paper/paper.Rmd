@@ -11,10 +11,15 @@ toc: FALSE
 header-includes:
   \usepackage{float}
   \floatplacement{figure}{H}
-  
+
+always_allow_html: yes
+
 bibliography: references.bib
 
 ---
+
+
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -246,6 +251,24 @@ data.frame(table(simulated_dataset$q13_CEWS,simulated_dataset$q1_city))%>%
 ```
 
 According to figure 14, Peterborough restaurants are using more Canadian Emergency Wage Subsidy (CEWS)- a governmental program available for businesses to reimburse a considerable portion of their employees’ salaries – compared to Brantford restaurants. It is reasonable for Brantford restaurants to have utilized less of this grant because CEWS covers the wages partially and yet, the employer should pay the rest of the employee’s salary. This is also consistent with the results in figure 3 where they indicated to have had more layoffs.
+
+```{r}
+data.frame(table(simulated_dataset$q14_loans,simulated_dataset$q1_city))%>%
+  mutate(Var1 = fct_relevel(Var1 ,"Prefer not to say","More than $50,000","$40,000 ~ $50,000","$20,000 ~ $40,000","$0 ~ $20,000")) %>% 
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+  geom_bar(stat = "identity", width = 0.8, position = position_dodge())+
+  ylab("Number of responses")+
+  xlab("Grant value")+
+  ggtitle("How much loans have you applied for the COVID-19 related reasons?")+
+  guides(fill=guide_legend(title="City"))+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 0))+
+  coord_flip()
+
+```
+As shown in figure 15, Peterborough restaurants have received more business loans than restaurants in Brantford. Since loans have to be paid back, businesses operating at low operating expectation are less likely to apply for the loans. And this corresponds with our previous findings of the expected survival time (Figure \@ref(fig:q8)) and expected recovery time (Figure \@ref(fig:q10)) as mentioned before.
+
+**They probably see a brighter future for their business to think out their repayments accordingly. However, Brantford restaurants which according to figure 8 are less hopeful to their business in future, probably mutter “It is never too late to mend” and refrain adding to their liabilities, though the loan’s interest be very low.**
 
 
 # Discussion
