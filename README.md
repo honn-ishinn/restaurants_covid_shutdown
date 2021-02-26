@@ -1,6 +1,6 @@
 # Shutdown Effects on Restaurants in Ontario
 
-This repo contains notes and codes exploring shutdown effects on restaurants in Ontario. The result suggest that shutdown restrictions have negative impacts on restaurant employment, sales and operating confidence.
+This repo contains notes and codes exploring shutdown effects on restaurants in Ontario. The result suggests that shutdown restrictions have negative impacts on restaurant employment, sales and operating confidence.
 
 
 # Files structure
