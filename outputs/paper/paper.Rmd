@@ -9,8 +9,10 @@ output:
 toc: FALSE
 
 header-includes:
-  \usepackage{float}
-  \floatplacement{figure}{H}
+ - \usepackage{float}
+ - \floatplacement{figure}{H}
+ - \floatplacement{table}{H}
+
 
 always_allow_html: yes
 
@@ -39,7 +41,7 @@ library(kableExtra)
 
 &nbsp; &nbsp; To help recover from the current recession, we at Petit Poll have partnered with the Ontario government to examine the effects and scope of COVID shutdown on restaurants. We conducted an experiment by selecting two single tier cities, namely Peterborough and Brantford, ^[Ontario's Municipal Act, 2001 defines a single-tier municipality as "a municipality, other than an upper-tier municipality, that does not form part of an upper-tier municipality for municipal purposes"] with similar restaurant operating situations in Ontario and investigated how reopening the dine-in services for restaurants in Peterborough has prevailed over the state of continued shutdown in Brantford through surveys. The results showed that continuing shutdown has negatively impact the employment, sales volume and operating confidence on restaurant businesses in Brantford. In addition, the governmental support programs contributed substantially to restaurant businesses in both reopened and shutdown cities. However, the higher increased COVID cases in Peterborough demonstrates the drawback of the reopening, and the Ontario government should hold a clear measure between public health and economic recovery before further policy implementations.
 
-&nbsp; &nbsp; We organize he rest of paper as follows: In Data section, we first discuss interventions of the experiment. Next, we introduce sampling methods and survey methodologies to collect the data. And then, we discuss main findings from survey results. In Discussion section, we would elaborate on concerns about the intervention on city selections, sampling methods and survey methodologies. And we also propose our thoughts on further policy implications. In Appendix, we include screenshots of survey contents.^[ Code and data are available at the GitHub repo: https://github.com/honn-ishinn/restaurants_covid_shutdown"]
+&nbsp; &nbsp; We organize the rest of paper as follows: In Data section, we first discuss interventions of the experiment. Next, we introduce sampling methods and survey methodologies to collect the data. And then, we discuss main findings from survey results. In Discussion section, we would elaborate on concerns about the intervention on city selections, sampling methods and survey methodologies. And we also propose our thoughts on further policy implications. In Appendix, we include screenshots of survey contents.^[ Code and data are available at the GitHub repo: https://github.com/honn-ishinn/restaurants_covid_shutdown"]
 
 
 # Data
@@ -127,7 +129,7 @@ The two surveys incurred a total cost of \$10,000 CAD, which was mainly used to 
 simulated_dataset<-read_csv(here('outputs/survey/simulated_restaurant_data.csv'))
 ```
 
-```{r question3, fig.align='center', fig.cap="Layoff Situation due to COVID 19", fig.width=6, fig.height=3, echo= FALSE, message=FALSE, warning=FALSE}
+```{r question3, fig.align='center', fig.cap="Layoff Situation due to COVID 19", fig.width=7, fig.height=3, echo= FALSE, message=FALSE, warning=FALSE}
 data.frame(table(simulated_dataset$q3_layoff,simulated_dataset$q1_city))%>%
   ggplot(aes(Var1, Freq,fill=Var2)) +
   theme_minimal()+
@@ -162,8 +164,6 @@ From Figure \@ref(fig:q4), we notice a considerable increase in sales in Peterbo
 
 In contrast, continuing shutdown restrictions during October to December on Brantford resulted in a slight decrease in sales volume for those restaurants. We propose possible reasons for the decrease in restaurant sales: (1) Residents in Brantford changed their mealing behaviors to cook more by themselves, instead of relying on meals from restaurants. (2) The continuing shutdown resulted in closures of other businesses, so these business staffs were not contributing for the restaurant sales anymore. 
 
-The increased costs of restaurants in Peterborough, as shown in Figure \@ref(fig:q5), demonstrated more activities in their restaurants. This change admits that the restaurants probably should have preserved more of their staff and consumed more utility or housekeeping materials to maintain their dine-in area. Although increased operating cost would usually impact the business unit negatively, from a broader view, these costs generate economic flow into local society and are vital for other business sectors to survive. So we consider the increased cost in restaurants during the reopening period as a good signal of economic wellbeing.
-
 ```{r q5, fig.align='center', fig.cap="Total Cost Volume Change Oct to Dec vs July to Sept in 2020", fig.width=6, fig.height=3, echo= FALSE, message=FALSE, warning=FALSE}
 
 q5_table <- data.frame(table(simulated_dataset$q5_total_cost,simulated_dataset$q1_city))
@@ -182,7 +182,10 @@ q5_table%>%
   coord_flip()
 
 ```
-The following figure (\@ref(fig:q8)) demonstrates restaurant owners' opinions towards the expected survivability of their businesses. It is very unfortunate that restaurants in Brantford are not as positive to continue their businesses for longer times, indicating a stressful operating situation during these continuing shutdown period. While on the other hand, restaurants in Peterborough generally expect to survive longer, showing stronger confidence to continue their businesses after reopening.
+
+The increased costs of restaurants in Peterborough, as shown in Figure \@ref(fig:q5), demonstrated more activities in their restaurants. This change admits that the restaurants probably should have preserved more of their staff and consumed more utility or housekeeping materials to maintain their dine-in area. Although increased operating cost would usually impact the business unit negatively, from a broader view, these costs generate economic flow into local society and are vital for other business sectors to survive. So we consider the increased cost in restaurants during the reopening period as a good signal of economic wellbeing.
+
+
 ```{r q8, fig.align='center', fig.cap="Expected Survival Time if Current Situation Continues", fig.width=6, fig.height=3, echo= FALSE, message=FALSE, warning=FALSE}
 # Use
 
@@ -198,7 +201,7 @@ data.frame(table(simulated_dataset$q8_survive,simulated_dataset$q1_city))%>%
   guides(fill=guide_legend(title="City"))+
   coord_flip()
 ```
-
+The figure (\@ref(fig:q8)) shown above demonstrates restaurant owners' opinions towards the expected survivability of their businesses. It is very unfortunate that restaurants in Brantford are not as positive to continue their businesses for longer times, indicating a stressful operating situation during these continuing shutdown period. While on the other hand, restaurants in Peterborough generally expect to survive longer, showing stronger confidence to continue their businesses after reopening.
 
 
 ```{r q10, fig.align='center', fig.cap="Expected Recovery Time Back to pre-COVID Situation", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
@@ -221,24 +224,30 @@ Although from Figure \@ref(fig:q8), we a pervasive gloom among the Brantford res
 
 In addition, survey results about expected recovery time back to pre-COVID situation (Figure \@ref(fig:q10)) illustrate that even if the pandemic ends immediately, most restaurants in Brantford, especially quick-service restaurants, hold negative views to recover back to pre-COVID operating situation in a short period of time. For restaurants in Peterborough, despite some suspicions to recoup with the pre-COVID situation in more than a year, most of them expected to recovery in less than a year. Therefore, we believe that the continuing shutdown in Brantford have harmed expectations of future operation possibilities in Brantford, while the reopening in Peterborough has built confidence to resolve current operation difficulties.
 
-```{r}
-simulated_dataset %>%
+```{r q11,echo=FALSE }
+t1<-simulated_dataset %>%
   tabyl(q1_city, q11_rate_support)%>%
   adorn_totals("row")%>%
   adorn_totals("col")%>%
   adorn_percentages("row")%>%
   adorn_pct_formatting(digits=2)%>%
   adorn_ns()%>%
-  adorn_title("combined",row_name = "City", col_name = "Rating")%>%
-  kable("html", align = 'ccccccc', caption = 'Number or percentage of each rating level')%>%
+  adorn_title("combined",row_name = "City", col_name = "Rating")
+
+
+kable(t1, caption = 'Number or percentage of each rating level')%>%
   kable_styling(full_width = F)
+
+
+
+
 ```
 
- As an agent to gather relevant feedback to the Ontario Government, we asked restaurants how they found the governmental support programs so far. According to Table, both cities stated the effectiveness of the governmental support programs, nevertheless, this figure also implies to their satisfaction and also appreciation for these programs by business entities in both cities.
-```{r}
-# use
+ As an agent to gather relevant feedback to the Ontario Government, we asked restaurants how they found the governmental support programs so far. According to Table, both cities stated the effectiveness of the governmental support programs, nevertheless, this figure (Table \@ref(tab:q11)) also implies to their satisfaction and also appreciation for these programs by business entities in both cities.
+```{r q14, fig.align='center', fig.cap="Restaurants receiving the Canada Emergency Wage Subsidy(CEWS)", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
+
 data.frame(table(simulated_dataset$q13_CEWS,simulated_dataset$q1_city))%>%
-#  mutate(Var1 = fct_relevel(Var1 ,"Prefer not to say","More than $50,000","$40,000 ~ $50,000","$20,000 ~ $40,000","$0 ~ $20,000")) %>% 
+  mutate(Var1 = fct_relevel(Var1 ,"Prefer not to say","I do not know","No","Yes"))%>%
   ggplot(aes(Var1, Freq,fill=Var2)) +
     geom_bar(stat = "identity", width = 0.8, position = position_dodge())+
   ylab("Number of responses")+
@@ -250,9 +259,9 @@ data.frame(table(simulated_dataset$q13_CEWS,simulated_dataset$q1_city))%>%
   coord_flip()
 ```
 
-According to figure 14, Peterborough restaurants are using more Canadian Emergency Wage Subsidy (CEWS)- a governmental program available for businesses to reimburse a considerable portion of their employees’ salaries – compared to Brantford restaurants. It is reasonable for Brantford restaurants to have utilized less of this grant because CEWS covers the wages partially and yet, the employer should pay the rest of the employee’s salary. This is also consistent with the results in figure 3 where they indicated to have had more layoffs.
+According to Figure \@ref(fig:q14), Peterborough restaurants are using more Canadian Emergency Wage Subsidy (CEWS)- a governmental program available for businesses to reimburse a considerable portion of their employees’ salaries – compared to Brantford restaurants. It is reasonable for Brantford restaurants to have utilized less of this grant because CEWS covers the wages partially and yet, the employer should pay the rest of the employee’s salary. This is also consistent with the results in figure 3 where they indicated to have had more layoffs.
 
-```{r}
+```{r q15, fig.align='center', fig.cap="How much loans have you applied for the COVID-19 related reasons?", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
 data.frame(table(simulated_dataset$q14_loans,simulated_dataset$q1_city))%>%
   mutate(Var1 = fct_relevel(Var1 ,"Prefer not to say","More than $50,000","$40,000 ~ $50,000","$20,000 ~ $40,000","$0 ~ $20,000")) %>% 
   ggplot(aes(Var1, Freq,fill=Var2)) +
@@ -266,7 +275,7 @@ data.frame(table(simulated_dataset$q14_loans,simulated_dataset$q1_city))%>%
   coord_flip()
 
 ```
-As shown in figure 15, Peterborough restaurants have received more business loans than restaurants in Brantford. Since loans have to be paid back, businesses operating at low operating expectation are less likely to apply for the loans. And this corresponds with our previous findings of the expected survival time (Figure \@ref(fig:q8)) and expected recovery time (Figure \@ref(fig:q10)) as mentioned before.
+As shown in Figure \@ref(fig:q15), Peterborough restaurants have received more business loans than restaurants in Brantford. Since loans have to be paid back, businesses operating at low operating expectation are less likely to apply for the loans. And this corresponds with our previous findings of the expected survival time (Figure \@ref(fig:q8)) and expected recovery time (Figure \@ref(fig:q10)) as mentioned before.
 
 **They probably see a brighter future for their business to think out their repayments accordingly. However, Brantford restaurants which according to figure 8 are less hopeful to their business in future, probably mutter “It is never too late to mend” and refrain adding to their liabilities, though the loan’s interest be very low.**
 
