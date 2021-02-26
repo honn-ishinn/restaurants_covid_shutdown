@@ -182,7 +182,7 @@ library(finalfit)
 #https://finalfit.org/articles/all_tables_examples.html
 
 #https://stackoverflow.com/questions/32593434/r-change-row-order
-tests <- simulated_survey1_dataset %>% 
+f_survey <- simulated_survey1_dataset %>% 
   summary_factorlist("q1_city", c("q3_category","q5_nature","q2_employees","q4_sales","q6_customers"),
                      p = FALSE, 
                      add_dependent_label = TRUE,
@@ -194,12 +194,12 @@ tests <- simulated_survey1_dataset %>%
   rename(
     Responses = ` `
   ) #%>% 
- tests$q1_city <- NULL
-#  tests$Responses[c(1:5,9,8,6,7,10,11,13,14,15,12,16,21,17,18,19,20,22),] # Manually change the order of the factor levels to have a better visualization 
- tests <- tests[c(1:5,9,8,6,7,10,11,13,14,15,12,16,21,17,18,19,20,22),] %>% 
-    mutate(group = c("Total Samples","Restaurant Category","","Restaurant Nature","","Number of Employees","","","","","Average Monthly Sales","","","","","","Restaurant Capacity","","","","",""))
+ f_survey$q1_city <- NULL
+#  f_survey$Responses[c(1:5,9,8,6,7,10,11,13,14,15,12,16,21,17,18,19,20,22),] # Manually change the order of the factor levels to have a better visualization 
+ f_survey <- f_survey[c(1:5,9,8,6,7,10,11,13,14,15,12,16,21,17,18,19,20,22),] %>% 
+    mutate(` ` = c("Total Samples","Restaurant Category","","Restaurant Nature","","Number of Employees","","","","","Average Monthly Sales","","","","","","Restaurant Capacity","","","","",""))
 
-tests %>% 
+f_survey %>% 
   kable(
     caption = "Test",
     booktabs = TRUE,
@@ -207,11 +207,13 @@ tests %>%
     col.names = 
   )
   mutate(group = c("","Restaurant Category","","Restaurant Nature","","Number of Employees","","","","","Average Monthly Sales","","","","","","Restaurant Capacity","","","","","")) #%>% 
-  kable( tests[,c(4,1,2,3)],caption = "TEST CAPTION",
+  
+  kable( f_survey[,c(4,1,2,3)],caption = "Summary Statistics for First Survey",
          booktabs = TRUE,
-         valign='t')
-    ) %>% 
-  kable_styling()
+         valign='t'
+         ) 
+  #%>% 
+  #  kable_styling(latex_options = "hold_position", protect_latex = FALSE)
   
 ```
 

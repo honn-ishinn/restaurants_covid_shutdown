@@ -77,6 +77,7 @@ data.frame(table(simulated_dataset$q3_layoff,simulated_dataset$q1_city))%>%
 
 # Referenced the following link to reorder responses
 #https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2.html
+
 # Question4 How was your total sales volume during Oct to Dec 2020 compared to July to Sept 2020?
 
 q4_table <- data.frame(table(simulated_dataset$q4_total_sales,simulated_dataset$q1_city))
@@ -112,7 +113,7 @@ q5_table%>%
   guides(fill=guide_legend(title="City"))+
   coord_flip()
 
-# Question 8: 8. If current conditions continue, how long do you expect your business to survive before you will have to close down permanently?
+# Question 8. If current conditions continue, how long do you expect your business to survive before you will have to close down permanently?
 
 data.frame(table(simulated_dataset$q8_survive,simulated_dataset$q1_city))%>%
   mutate(Var1 = fct_relevel(Var1 ,"Unknown","Longer than 6 months","3 to 6 months","Less than 3 months")) %>% 
@@ -141,7 +142,7 @@ data.frame(table(simulated_dataset$q10_recover,simulated_dataset$q1_city,simulat
   guides(fill=guide_legend(title="City"))+
   coord_flip()
 
-# Question 11. To what extent do you feel the government financial support programs helped your business survive? (1 being bad, 5 being excellent.)
+# Question 11. To what extent do you feel the government financial support programs helped your business survive? (1 being terrible, 5 being excellent.)
 
 simulated_dataset %>%
   tabyl(q1_city, q11_rate_support)%>%
@@ -162,11 +163,24 @@ data.frame(table(simulated_dataset$q14_loans,simulated_dataset$q1_city))%>%
   ggplot(aes(Var1, Freq,fill=Var2)) +
   geom_bar(stat = "identity", width = 0.8, position = position_dodge())+
   ylab("Number of responses")+
-  xlab("Grant value")+
+  xlab("Loan value")+
   ggtitle("How much loans have you received for the COVID-19 related reasons?")+
   guides(fill=guide_legend(title="City"))+
   theme_minimal()+
   theme(axis.text.x = element_text(angle = 0))+
   coord_flip()
 
+# Question 15 Including the above governmental programs (if applicable), how much grants have you received for COVID related reasons?
+
+data.frame(table(simulated_dataset$q15_grants,simulated_dataset$q1_city))%>%
+  mutate(Var1 = fct_relevel(Var1 ,"Prefer not to say","More than $40,000","$20,000 ~ $40,000","$10,000 ~ $20,000","$0 ~ $10,000")) %>% 
+  ggplot(aes(Var1, Freq,fill=Var2)) +
+  geom_bar(stat = "identity", width = 0.8, position = position_dodge())+
+  ylab("Number of responses")+
+  xlab("Grant value")+
+  ggtitle("Grants Received for COVID-19 Related Reasons")+
+  guides(fill=guide_legend(title="City"))+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 0))+
+  coord_flip()
 

@@ -37,7 +37,7 @@ phoneNum <- vector()
 
 # Since each page only showed 50 results, and there are more resturuants in the two cities. We use "offset" to find all the records. 
 
-# Get all 133 restaurants in Peterborough
+# Get all 133 restaurants in Brantford
 for(n in seq(0, 133, 50)) {
   url <- modify_url(yelp, path = c("v3", "businesses", "search"),
                     query = list(term = term, location = Brantford_location, 
