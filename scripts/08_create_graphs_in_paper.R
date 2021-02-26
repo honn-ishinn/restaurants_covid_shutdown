@@ -1,11 +1,12 @@
 #### Preamble ####
-# Purpose: This script create relavent graphs used in the paper.
+# Purpose: This script create relevant tables and graphs used in the paper.
 # Author:  Hong Pan, Hong Shi, Yixin Guan, Babak Mokri
-# Data:  "22 February 2021"
+# Data:  "25 February 2021"
 # Contact:  hong.pan@mail.utoronto.ca， lancehong.shi@mail.utoronto.ca, yixin.guan@mail.utoronto.ca, b.mokri@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: 
-# - Need to have downloaded the "simulated_restaurant_data.csv" in "06_simulate_survey_responses.R" and saved it to outputs/survey
+# - Need to have downloaded the "simulated_first_survey.csv" in "06_simulate_first_survey_responses.R" and saved it to outputs/survey
+# - Need to have downloaded the "simulated_second_survey.csv" in "07_simulate_second_survey_responses.R" and saved it to outputs/survey
 
 
 
@@ -14,15 +15,52 @@
 
 library(here)
 library(tidyverse) # used for data manipulation
-library(ggpubr) ##for combing figures in one graph
+library(ggpubr) # for combing figures in one graph
 library(ggrepel)
 library(kableExtra)
 library(janitor)
 
+#install.packages("finalfit")
+
+library(finalfit)
 # Import Dataset
 
+# First Survey
+simulated_survey1_dataset <- read.csv( here('outputs/survey/simulated_first_survey.csv'))
 
-simulated_dataset<-read_csv(here('outputs/survey/simulated_restaurant_data.csv'))
+# Second Survey
+simulated_dataset<-read_csv(here('outputs/survey/simulated_second_survey.csv'))
+
+#################   First Survey   ###############
+
+# get the summary statistics of the first survey
+# Referenced the following link to create this amazing summary table: https://finalfit.org/articles/all_tables_examples.html
+# Referenced the following link to change the order of rows: https://stackoverflow.com/questions/32593434/r-change-row-order
+
+f_survey <- simulated_survey1_dataset %>% 
+  summary_factorlist("q1_city", c("q3_category","q5_nature","q2_employees","q4_sales","q6_customers"),
+                     p = FALSE, 
+                     add_dependent_label = TRUE,
+                     dependent_label_prefix = "",
+                     add_col_totals = TRUE,
+                     include_row_missing_col = FALSE,
+                     col_totals_rowname = "",
+                     total_col = FALSE) %>%
+  rename(
+    Responses = ` `
+  )
+f_survey$q1_city <- NULL
+# Manually change the order of the factor levels to have a better visualization 
+f_survey <- f_survey[c(1:5,9,8,6,7,10,11,13,14,15,12,16,21,17,18,19,20,22),] %>% 
+  mutate(` ` = c("Total Samples","Restaurant Category","","Restaurant Nature","","Number of Employees","","","","","Average Monthly Sales","","","","","","Restaurant Capacity","","","","",""))
+# Create column name to describe the survey questions
+kable( f_survey[,c(4,1,2,3)],caption = "Summary Statistics of the First Survey",
+       booktabs = TRUE,
+       valign='t') 
+
+
+
+#################   Second Survey   ###############
 
 # Question3 How many employees have you laid off because of COVID 19? 
 

@@ -1,5 +1,6 @@
 #### Preamble ####
-# Purpose: This script simulates the responses to restaurant survey responses in Peterborough and Brantford.
+# Purpose: This script simulates the responses of the second survey about impact of COVID on restaurant business
+#          in Peterborough and Brantford after three months of reopening and shutdown, respectively.
 # Author:  Hong Pan, Hong Shi, Yixin Guan, Babak Mokri
 # Data:  "22 February 2021"
 # Contact:  hong.pan@mail.utoronto.ca， lancehong.shi@mail.utoronto.ca, yixin.guan@mail.utoronto.ca, b.mokri@mail.utoronto.ca
@@ -147,7 +148,7 @@ simulated_dataset <-
 
 #### Save and clean-up
 
-write.csv(simulated_dataset, here('outputs/survey/simulated_restaurant_data.csv'))
+write.csv(simulated_dataset, here('outputs/survey/simulated_second_survey.csv'))
 
 
 
