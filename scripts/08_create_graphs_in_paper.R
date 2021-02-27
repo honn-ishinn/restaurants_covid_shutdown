@@ -146,15 +146,20 @@ data.frame(table(simulated_dataset$q10_recover,simulated_dataset$q1_city,simulat
 
 simulated_dataset %>%
   tabyl(q1_city, q11_rate_support)%>%
-  adorn_totals("row")%>%
-  adorn_totals("col")%>%
+  adorn_totals("row", name = "Total")%>%
   adorn_percentages("row")%>%
   adorn_pct_formatting(digits=2)%>%
   adorn_ns()%>%
   adorn_title("combined",row_name = "City", col_name = "Rating")%>%
-  kable("html", align = 'ccccccc', caption = 'Number or percentage of each rating level')%>%
-  kable_styling(full_width = F)
-
+  rename(
+    `Terrible` = `1`,
+    `Poor` = `2`,
+    `Fair` = `3`,
+    `Good` = `4`,
+    `Excellent` = `5`
+  ) %>% 
+  kable(align = 'ccccccc', caption = 'Helpfulness of Government Financial Support Programs on Restaurants') %>% 
+  kable_styling(latex_options = "hold_position")
 
 # Question 14 How much loans have you received for the COVID-19 related reasons ?
 
