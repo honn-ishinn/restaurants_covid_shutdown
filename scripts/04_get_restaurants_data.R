@@ -19,8 +19,7 @@ library(xml2)
 
 # In order to make an request using Yelp API, a Yelp developer account and a API Key have to be created. 
 
-token <- "shSjf2t4b6wdrVtwf4kGvhZtOkR5c01gStUBs5S4In7dU5heYqd0eIymikqX2v-xN7OEqY_AgfZ0d9CvXGVj5nUYAZ7A9rWjGOtL7qu6H5RlnrQaW_zuYMbTb7opYHYx"
-
+token <- "Please enter your own token here"
 # Setup for searching restaurants in Brantford, Ontario
 
 yelp <- "https://api.yelp.com"
