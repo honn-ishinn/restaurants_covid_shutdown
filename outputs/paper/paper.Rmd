@@ -297,7 +297,7 @@ simulated_dataset %>%
   kable_styling(latex_options = "hold_position")
 ```
 
-As shown in Figure \@ref(fig:q14), restaurants in Peterborough had applied more business loans than those in Brantford during the intervention. Since loans have to be paid back, businesses with low operating confidence were less likely to apply for loans. With increased business opportunities after reopening, restaurant owners were more likely to invest for faster recovery, and this corresponds with our previous findings of longer expected survival time (Figure \@ref(fig:q8)) and expected recovery time (Figure \@ref(fig:q10)) in Peterborough restaurants as mentioned before.
+&nbsp; &nbsp; As shown in Figure \@ref(fig:q14), restaurants in Peterborough had applied more business loans than those in Brantford during the intervention. Since loans have to be paid back, businesses with low operating confidence were less likely to apply for loans. With increased business opportunities after reopening, restaurant owners were more likely to invest for faster recovery, and this corresponds with our previous findings of longer expected survival time (Figure \@ref(fig:q8)) and expected recovery time (Figure \@ref(fig:q10)) in Peterborough restaurants as mentioned before.
 
 ```{r q14, fig.align='center', fig.cap="Loans Applied for COVID-19 Related Reasons", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
 data.frame(table(simulated_dataset$q14_loans,simulated_dataset$q1_city))%>%
@@ -314,7 +314,7 @@ data.frame(table(simulated_dataset$q14_loans,simulated_dataset$q1_city))%>%
 
 ```
 
-In contrast, restaurants in Brantford generally received more grants than those in Peterborough(Figure \@ref(fig:q15)). Since grants are non-repayable funds and require certain conditions to apply, restaurants in Peterborough with better business conditions may not be eligible to apply for grants. And restaurants that suffered more in Brantford could receive more grants during the shutdown.
+&nbsp; &nbsp; In contrast, restaurants in Brantford generally received more grants than those in Peterborough(Figure \@ref(fig:q15)). Since grants are non-repayable funds and require certain conditions to apply, restaurants in Peterborough with better business conditions may not be eligible to apply for grants. And restaurants that suffered more in Brantford could receive more grants during the shutdown.
 
 ```{r q15, fig.align='center', fig.cap="Grants Received for COVID-19 Related Reasons", fig.width=8, fig.height=4, echo= FALSE, message=FALSE, warning=FALSE}
 
@@ -387,7 +387,7 @@ covid_tracking <- readr::read_csv(here::here("inputs/data/simulated_covid_data.c
 
 ## City Selection
 
-To obtain an accurate estimate of the shutdown effect on restaurant businesses, average characteristics of restaurants in the reopening city and those in the shutdown city need to be identical (in theory) in the absence of the reopen intervention under current COVID outbreak. Since businesses in the food service industries are highly labor intensive [@cite_labor], the `total employment` in food service industries between selected cities is preferred to be as identical as possible. Besides, `population density` ( `Total Population`/ `Total Land Area in squared kilometers`) also has significant organizational life-cycle effects[@cite_density]. At different population density levels, competitions for food services varies, leading to different restaurants mortality rates even without the reopen intervention. As a result, total employment in food service and population density serve as the two primary restaurant operation characteristics for the selection of treatment city and control city.
+&nbsp; &nbsp; To obtain an accurate estimate of the shutdown effect on restaurant businesses, average characteristics of restaurants in the reopening city and those in the shutdown city need to be identical (in theory) in the absence of the reopen intervention under current COVID outbreak. Since businesses in the food service industries are highly labor intensive [@cite_labor], the `total employment` in food service industries between selected cities is preferred to be as identical as possible. Besides, `population density` ( `Total Population`/ `Total Land Area in squared kilometers`) also has significant organizational life-cycle effects[@cite_density]. At different population density levels, competitions for food services varies, leading to different restaurants mortality rates even without the reopen intervention. As a result, total employment in food service and population density serve as the two primary restaurant operation characteristics for the selection of treatment city and control city.
 
 ```{r selectsetup, include=FALSE}
 
@@ -457,7 +457,7 @@ ggplot( data = popdensity_employment, mapping = aes(x = Employment, y = Populati
   )
 ```
 
-We used the employment by industry data and 2016 Census data available at Statistics Canada to identify cities with similar total employment in food service industry and population density. The above point graph(Figure \@ref(fig:selectplot)) indicated that Brantford and Peterborough have similar characteristics affecting restaurant operations. In addition, the coefficient of the graph $$\frac{Population\:Density}{Total \:Employment}=\frac{Total\:Population/Total\:Land\:Area}{Total\:Employment}$$, which could be interpreted as the number of people served by a restaurant employee per square kilometers, helps to identify the restaurant operating situation in designated regions. Similar coefficients between Brantford and Peterborough (0.306 vs 0.308) also suggest close restaurant characteristics. Besides, there is neither significant demographics nor land areas difference between these two cities, so we consider them as a valid comparison group and reopened Peterborough as the treatment group while maintaining Brantford shutdown as the control group.
+&nbsp; &nbsp; We used the employment by industry data and 2016 Census data available at Statistics Canada to identify cities with similar total employment in food service industry and population density. The above point graph(Figure \@ref(fig:selectplot)) indicated that Brantford and Peterborough have similar characteristics affecting restaurant operations. In addition, the coefficient of the graph, $$\frac{Population\:Density}{Total \:Employment}=\frac{Total\:Population/Total\:Land\:Area}{Total\:Employment}$$ which could be interpreted as the number of people served by a restaurant employee per square kilometers, helps to identify the restaurant operating situation in designated regions. Similar coefficients between Brantford and Peterborough (0.306 vs 0.308) also suggest close restaurant characteristics. Besides, there is neither significant demographics nor land areas difference between these two cities, so we consider them as a valid comparison group and reopened Peterborough as the treatment group while maintaining Brantford shutdown as the control group.
 
 Extra concerns when determining the treatment group and control group:
 
@@ -495,7 +495,7 @@ The sampling methods of this experiment were accompanied by some inevitable limi
 
 # Appendix A
 
-Link to access the first survey about restaurant business conditions conducted in September, 2020:
+&nbsp; &nbsp; Link to access the first survey about restaurant business conditions conducted in September, 2020:
 https://docs.google.com/forms/d/1Bl8CbJiN8sUbhsDdnzqP4ifIyE9KT8iJgYI9ldcR2g8
 
 ```{r survey1s, echo=FALSE,fig.align='center',fig.cap="Scripts to contact with restaurant owners in the first survey", out.width = '80%'}
@@ -539,7 +539,7 @@ knitr::include_graphics(here("outputs/images/survey1_thanks.png"))
 
 # Appendix B
 
-Link to access the second survey about impact of COVID-19 on restaurants conducted in January, 2021:
+&nbsp; &nbsp; Link to access the second survey about impact of COVID-19 on restaurants conducted in January, 2021:
 https://docs.google.com/forms/d/1FXSeKFkvCtM41k9xFYjQQ_eDGdBs9skVYZ3zU5LNRgY
 
 ```{r survey2s, echo=FALSE, fig.align='center', fig.cap="Scripts to contact with restaurant owners in the second survey", out.width = '80%'}
